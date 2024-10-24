@@ -18,6 +18,10 @@ DB_HOST=mysql_url
 DB_NAME=mysql_schema
 DB_USER=mysql_user
 DB_PASS=mysql_pass
+S3_ACCESS_KEY=amazon.s3.access-key
+S3_SECRET_KEY=amazon.s3.secret-key
+S3_ENDPOINT=amazon.s3.endpoint
+S3_BUCKET_NAME=amazon.s3.bucket-name
 ```
 
 ### Run the development server
