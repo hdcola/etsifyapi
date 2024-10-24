@@ -14,6 +14,10 @@ Create a `.env` file in the root of the project with the following content:
 
 ```
 JWT_SECRET=your_jwtsecret
+DB_HOST=mysql_url
+DB_NAME=mysql_schema
+DB_USER=mysql_user
+DB_PASS=mysql_pass
 ```
 
 ### Run the development server
