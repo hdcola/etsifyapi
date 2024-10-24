@@ -42,5 +42,6 @@ pnpm test -- --coverage
 #### References
 
 - [Jest](https://jestjs.io/)
-- [Supertest](https://github.com/ladjs/supertest)
 - [expect](https://jestjs.io/docs/expect)
+- [Jest Mocks](https://jestjs.io/docs/mock-functions)
+- [Supertest](https://github.com/ladjs/supertest)
