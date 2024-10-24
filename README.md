@@ -21,3 +21,26 @@ JWT_SECRET=your_jwtsecret
 ```bash
 pnpm dev
 ```
+
+
+### Run tests
+
+Install [Orta.vscode-jest](https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest) in your VSCode and run the tests from there.
+
+Run the tests in CLI:
+
+```bash
+pnpm test
+```
+
+Refresh the coverage report:
+
+```bash
+pnpm test -- --coverage
+```
+
+#### References
+
+- [Jest](https://jestjs.io/)
+- [Supertest](https://github.com/ladjs/supertest)
+- [expect](https://jestjs.io/docs/expect)
