@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const reviews = sequelize.define("reviews", {
         review_id: {
-            type: DataTypes.BIGINT(20),
+            type: DataTypes.BIGINT(20).UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT
         },
         rating: {
-            type: DataTypes.INTEGER(1),
+            type: DataTypes.INTEGER(11).UNSIGNED,
             allowNull: false,
             validate: {
                 notNull: {

@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const carts = sequelize.define("carts", {
         cart_id: {
-            type: DataTypes.BIGINT(20),
+            type: DataTypes.BIGINT(20).UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         }

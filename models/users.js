@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const users = sequelize.define("users", {
         user_id: {
-            type: DataTypes.BIGINT(20),
+            type: DataTypes.BIGINT(20).UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
@@ -47,12 +47,12 @@ module.exports = (sequelize, DataTypes) => {
     users.associate = (models) => {
         users.hasOne(models.stores, {
             foreignKey: "user_id",
-            as: "store" // confirm
+            as: "store"
         });
 
         users.hasOne(models.carts, {
             foreignKey: "user_id",
-            as: "cart" // confirm
+            as: "cart"
         });
         
         users.hasMany(models.orders, {

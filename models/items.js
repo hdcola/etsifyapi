@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const items = sequelize.define("items", {
         item_id: {
-            type: DataTypes.BIGINT(20),
+            type: DataTypes.BIGINT(20).UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT
         },
         quantity: {
-            type: DataTypes.INTEGER(11),
+            type: DataTypes.INTEGER(11).UNSIGNED,
             allowNull: false,
             defaultValue: 0,
             validate: {
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         rating: {
-            type: DataTypes.INTEGER(11),
+            type: DataTypes.INTEGER(11).UNSIGNED,
             allowNull: false,
             defaultValue: 0,
             validate: {
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         discount_percent: {
-            type: DataTypes.INTEGER(4),
+            type: DataTypes.INTEGER(4).UNSIGNED,
             validate: {
                 min: 1,
                 max: 100
