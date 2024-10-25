@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
-const errorHandler = require('../../middlewares/errorHandler');
-const ApiError = require('../../utils/ApiError');
+const ApiError = require('../../utils/api-error');
+const errorHandler = require('../../middlewares/error-handler');
 
 describe('Error Handler Middleware', () => {
   let app;
