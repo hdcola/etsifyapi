@@ -5,14 +5,19 @@ Tamara
 Done since last scrum
 - Etsify branding
 To do until next scrum
-- Setup AWS RDS MySQL, review project proposal, hopefully start on data models implementation with sequelize.
+- Setup AWS RDS MySQL
+- Review project proposal
+- Hopefully start on data models implementation with sequelize.
 Need assistance with
 -
 Iana
 Done since last scrum
-- Wrote project description, initial list of technologies and libraries used, prepared the initial list of URLs and APIs
+- Wrote project description
+- Initial list of technologies and libraries used
+- Prepared the initial list of URLs and APIs
 To do until next scrum
-- Finish the list of APIs of the server side and URLs of the client side, will finish ER diagrams for the project proposal
+- Finish the list of APIs of the server side and URLs of the client side
+- Will finish ER diagrams for the project proposal
 Need assistance with
 -
 
@@ -20,21 +25,43 @@ Danny
 Done since last scrum
 - 
 To do until next scrum
-- use case & use case diagram
+- Use case & use case diagram
 - Setup web and API hosting
 - Setup CI&CD
 Need assistance with
 -
 10/24
+Tamara
+Done since last scrum
+- Setup AWS RDS MySQL
+- Completed the project proposal with Iana. 
+- Started on data models with sequelize.
+To do until next scrum
+- Complete the rest of the data models now that we have approval to proceed.
+Need assistance with
+-
+Iana
+Done since last scrum
+- ER diagram updated 
+- URLs for front-end and back-end
+- Participated in completing the project proposal
+To do until next scrum
+- Create AWS bucket for file storage
+Need assistance with
+-
 
 Danny
 Done since last scrum
 - Setup web hosting in Cloudflare (https://developers.cloudflare.com/pages/framework-guides/deploy-a-vite3-project/)
--  
+-  Setup API hosting in Render (https://docs.render.com/deploy-node-express-app)
+- Setup unit test and CI in API project
+- Setup unit test and CI in web project
 To do until next scrum
-- use case & use case diagram
-- Setup web and API hosting
-- Setup CI&CD
+- Setup unit test and CI in web project
+- Create and activate stripe account
+- Setting up public business information
+- Build frontend intergration with stripe
+- Build server side intergration with stripe
 Need assistance with
 -
 
