@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - hddev
+      - tamara
   pull_request:
     branches:
       - main
