@@ -9,8 +9,8 @@ db.sequelize.sync();
 
 const usersRouter = require('./routes/users');
 
-const errorHandler = require('./middlewares/errorHandler');
-const ApiError = require('./utils/ApiError');
+const errorHandler = require('./middlewares/error-handler');
+const ApiError = require('./utils/api-error');
 
 const app = express();
 
