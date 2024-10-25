@@ -1,0 +1,172 @@
+@startuml
+left to right direction
+' hide the spot
+' hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+'skinparam linetype polyline
+
+entity "users" as e01 {
+  *user_id : bigint(20)
+  --
+  *name : varchar(255)
+  *email : varchar(360)
+  *password : varchar(100)
+  *date_created : datetime
+}
+
+entity "addresses" as e02 {
+  *address_id : bigint(20)
+  --
+  *user_id : bigint(20) <<FK>>
+  *is_default : tinyint(1)
+  *name : varchar(255)
+  street_address : varchar(255)
+  apt_number : varchar(50)
+  city : varchar(100)
+  postal_code : varchar(20)
+  province : varchar(100)
+  phone : varchar(20)
+  *country_id : int(11) <<FK>>
+}
+
+entity "stores" as e03 {
+  *store_id : bigint(20)
+  --
+  *user_id : bigint(20) <<FK>>
+  *name : varchar(255)
+  description : text
+  rating : int(11)
+  *date_created : datetime
+  *country_id : int(11) <<FK>>
+  logo_url : varchar(360)
+  image_url : varchar(360)
+}
+
+entity "items" as e04 {
+    *item_id : bigint(20)
+    --
+    *store_id : bigint(20) <<FK>>
+    *name : varchar(255)
+    description : text
+    *quantity : int(11)
+    *price : decimal(10,2)
+    discount_percent : int(11)
+    *rating : int(11)
+    image_url : varchar(360)
+}
+
+entity "categories" as e05 {
+    *category_id : bigint(20)
+    --
+    *name : varchar(255)
+    subcategory_id : bigint(20) <<FK>>
+}
+
+entity "items_categories" as e06 {
+    *item_id : bigint(20) <<FK>>
+    *category_id : bigint(20) <<FK>>
+}
+
+entity "orders" as e07 {
+    *order_id : bigint(20)
+    --
+    *store_id : bigint(20) <<FK>>
+    *user_id : bigint(20) <<FK>>
+    *status : varchar(50)
+    *last_updated : datetime
+    tracking : varchar(255)
+    *full_name : varchar(255)
+    street_address : varchar(255)
+    apt_number : varchar(50)
+    city : varchar(100)
+    postal_code : varchar(20)
+    province : varchar(100)
+    phone : varchar(20)
+    *country_id : int(11) <<FK>>
+    *total : decimal(10,2)
+    *payment_method : varchar(50)
+    *payment_ref : varchar(255)
+    *date_created : datetime
+}
+
+entity "orders_items" as e08 {
+    *order_id : bigint(20) <<FK>>
+    *item_id : bigint(20) <<FK>>
+    --
+    *name : varchar(255)
+    *quantity : int(11)
+    *price : decimal(10,2)
+    discount_percent : int(11)
+}
+
+entity "carts" as e09 {
+    *cart_id : bigint(20)
+    --
+    *user_id : bigint(20) <<FK>>
+    *date_created : datetime
+    *last_updated : datetime
+}
+
+entity "carts_items" as e10 {
+    *cart_id : bigint(20) <<FK>>
+    *item_id : bigint(20) <<FK>>
+    --
+    *quantity : int(11)
+    discount_percent : int(11)
+}
+
+entity "reviews" as e11 {
+    *review_id : bigint(20)
+    --
+    *user_id : bigint(20) <<FK>>
+    *item_id : bigint(20) <<FK>>
+    description : text
+    rating : int(11)
+    *date_created : datetime
+}
+
+entity "favorite_stores" as e12 {
+    *store_id : bigint(20) <<FK>>
+    *user_id : bigint(20) <<FK>>
+}
+
+entity "favorite_items" as e13 {
+    *user_id : bigint(20) <<FK>>
+    *item_id : bigint(20) <<FK>>
+}
+
+entity "countries" as e14 {
+  *country_id : int(11)
+  *name : varchar(255)
+}
+
+
+
+'user
+e01 ||--|{ e02
+e01 ||..o| e03
+e01 ||--o{ e07
+e01 ||--o| e09
+e01 ||..o{ e11
+e01 ||..o{ e12
+e01 ||..o{ e13
+'item
+e04 ||--|{ e06
+e04 ||--o{ e08
+e04 ||..o{ e10
+e04 ||--o{ e11
+e04 ||..o{ e13
+'store
+e03 ||--o{ e04
+e03 ||--o{ e07
+e03 ||..o{ e12
+e03 }o--|| e14
+
+e02 }o--|| e14
+e05 ||--|{ e05
+e05 ||--o{ e06
+e07 ||--|{ e08
+e09 ||--|{ e10
+@enduml
