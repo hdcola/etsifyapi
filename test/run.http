@@ -1,0 +1,4 @@
+@host=http://localhost:3000
+
+### GET /test it should return 404
+GET {{host}}/test HTTP/1.1
