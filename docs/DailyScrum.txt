@@ -59,9 +59,41 @@ Done since last scrum
 To do until next scrum
 - Setup unit test and CI in web project
 - Create and activate stripe account
-- Setting up public business information
-- Build frontend intergration with stripe
-- Build server side intergration with stripe
+- Setting up public business information in stripe
+- Build frontend integration with stripe
+- Build server side integration with stripe
+- create ApiError class and errorHandler midware
+Need assistance with
+-
+
+10/25
+Tamara
+Done since last scrum
+-Complete the data models
+To do until next scrum
+- Work on implementing the skeleton using Material Uia nd using templates.
+Need assistance with
+-
+
+Iana
+Done since last scrum
+- Create AWS bucket for file storage
+- Learned how to do tests, started user register method
+To do until next scrum
+-
+Need assistance with
+-
+
+
+Danny
+Done since last scrum
+- Setup unit test and CI in web project
+- Create and activate stripe account
+- Setting up public business information in stripe
+- create ApiError class and errorHandler midware
+To do until next scrum
+- Build frontend integration with stripe
+- Build server side integration with stripe
 Need assistance with
 -
 
