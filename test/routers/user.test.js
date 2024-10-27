@@ -10,7 +10,9 @@ app.use(express.json());
 app.use('/users', router);
 
 jest.mock('../../models');
-
+jest.mock('jsonwebtoken', () => ({
+  sign: jest.fn(() => 'mockedToken'),
+}));
 
 describe('POST /users/register', () => {
 
@@ -19,6 +21,7 @@ describe('POST /users/register', () => {
   });
 
   it('should create a new user and return a success message and token', async () => {
+    users.create.mockResolvedValue('mockedToken');
     users.create.mockResolvedValue({ id: 1, name: 'TestUser', email: 'test@example.com' });
     const response = await request(app)
       .post('/users/register')
@@ -27,7 +30,7 @@ describe('POST /users/register', () => {
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('success', true);
     expect(response.body).toHaveProperty('message', 'User registered successfully');
-    expect(response.body).toHaveProperty('token');
+    expect(response.body).toHaveProperty('token', 'mockedToken');
   });
   
   it('should fail to register a new user with existing user name', async () => {
