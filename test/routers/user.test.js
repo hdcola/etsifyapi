@@ -11,7 +11,7 @@ app.use('/users', router);
 
 jest.mock('../../models');
 jest.mock('jsonwebtoken', () => ({
-  sign: jest.fn(() => 'mockedToken'),
+  sign: jest.fn(() => 'mockedToken'),  
 }));
 
 describe('POST /users/register', () => {
@@ -21,8 +21,8 @@ describe('POST /users/register', () => {
   });
 
   it('should create a new user and return a success message and token', async () => {
-    users.create.mockResolvedValue('mockedToken');
     users.create.mockResolvedValue({ id: 1, name: 'TestUser', email: 'test@example.com' });
+    
     const response = await request(app)
       .post('/users/register')
       .send({ name: 'TestUser', email: 'test@example.com', password: 'securePassword' });
@@ -30,7 +30,7 @@ describe('POST /users/register', () => {
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('success', true);
     expect(response.body).toHaveProperty('message', 'User registered successfully');
-    expect(response.body).toHaveProperty('token', 'mockedToken');
+    expect(response.body).toHaveProperty('token', 'mockedToken'); 
   });
   
   it('should fail to register a new user with existing user name', async () => {
@@ -43,8 +43,8 @@ describe('POST /users/register', () => {
       .post('/users/register')
       .send({ name: 'TestUser', email: 'test@example.com', password: 'securePassword' });
 
-    console.log("response.status => ", response.status);
-    console.log("response body: => ", response.body);
+    // console.log("response.status => ", response.status);
+    // console.log("response body: => ", response.body);
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('status', 'error');
     expect(response.body).toHaveProperty('message', 'Validation Error');
