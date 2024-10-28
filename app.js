@@ -20,11 +20,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
 
 app.use((req, res, next) => {
-  const error = ApiError.notFound('Resource not found' + req.originalUrl);
-  next(error);
+    const error = ApiError.notFound('Resource not found' + req.originalUrl);
+    next(error);
 });
 
 app.use(errorHandler);

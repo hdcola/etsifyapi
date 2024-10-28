@@ -5,7 +5,6 @@ const ApiError = require('../utils/api-error');
 const { generateToken } = require('../utils/jwt');
 const yup = require('yup');
 
-
 const userSchema = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
@@ -14,21 +13,24 @@ const userSchema = yup.object().shape({
 
 async function createUser({ name, email, password }) {
     try {
-        await userSchema.validate({ name, email, password }, { abortEarly: false });
+        await userSchema.validate(
+            { name, email, password },
+            { abortEarly: false }
+        );
     } catch (err) {
         if (err instanceof Sequelize.ValidationError) {
             const errors = err.errors.map((e) => ({
-              message: e.message,
-              field: e.path,
+                message: e.message,
+                field: e.path,
             }));
             throw ApiError.badRequest('Validation Error', errors);
-          } else {
+        } else {
             throw err;
-          }
+        }
     }
 
     // check if email already exists
-    const existingName = await users.findOne({ where: { name } });
+    /* const existingName = await users.findOne({ where: { name } });
     if (existingName) {
         throw ApiError.badRequest('Validation Error', [{
             field: 'name',
@@ -43,7 +45,7 @@ async function createUser({ name, email, password }) {
             field: 'email',
             message: 'Email already exists.'
         }]);
-    }
+    }*/
 
     const saltRounds = 10;
     const hash = await bcrypt.hash(password, saltRounds);
@@ -53,8 +55,12 @@ async function createUser({ name, email, password }) {
             email,
             password: hash,
         });
-        const token = generateToken({ name: newUser.name, email: newUser.email, id: newUser.id });
-        console.log("token: ", token);
+        const token = generateToken({
+            name: newUser.name,
+            email: newUser.email,
+            id: newUser.id,
+        });
+        console.log('token: ', token);
         return token;
     } catch (err) {
         if (err instanceof Sequelize.ValidationError) {
@@ -68,6 +74,5 @@ async function createUser({ name, email, password }) {
         }
     }
 }
-
 
 module.exports = { createUser };
