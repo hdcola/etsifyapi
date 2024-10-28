@@ -49,8 +49,6 @@ describe('POST /users/register', () => {
     });
 
     it('should fail to register a new user with existing email', async () => {
-        // users.findOne.mockResolvedValueOnce({ email: 'test@example.com' });
-        // users.findOne.mockResolvedValueOnce(null); // user with this email does not exist
         const SequelizeUniqueConstraintError = new Sequelize.ValidationError();
         SequelizeUniqueConstraintError.name = 'SequelizeUniqueConstraintError';
         SequelizeUniqueConstraintError.errors = [
@@ -66,13 +64,6 @@ describe('POST /users/register', () => {
                 validatorArgs: [],
             },
         ];
-
-        // const mockError = ApiError.badRequest('Validation Error', [
-        //     {
-        //         field: 'email',
-        //         message: 'Email already exists.',
-        //     },
-        // ]);
         users.create.mockRejectedValue(SequelizeUniqueConstraintError);
         const response = await request(app).post('/api/users/register').send({
             name: 'TestUser',
@@ -80,7 +71,7 @@ describe('POST /users/register', () => {
             password: 'securePassword',
         });
 
-        console.log(response.body);
+        console.log(response.body.errors);
         // console.log("response.status => ", response.status);
         // console.log("response body: => ", response.body);
         expect(response.status).toBe(400);
@@ -91,7 +82,7 @@ describe('POST /users/register', () => {
             expect.arrayContaining([
                 {
                     message: 'Email is already used.',
-                    path: 'email',
+                    field: 'email',
                 },
             ])
         );
