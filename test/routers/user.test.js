@@ -16,7 +16,7 @@ jest.mock('jsonwebtoken', () => ({
     sign: jest.fn(() => 'mockedToken'),
 }));
 
-describe('POST /users/register', () => {
+describe('POST /api/users/register', () => {
     beforeAll(() => {
         process.env.JWT_SECRET = 'testSecretKey';
     });
@@ -30,11 +30,13 @@ describe('POST /users/register', () => {
         users.create.mockResolvedValue({
             id: 1,
             username: 'TestUser',
+            full_name: "TestName TestFamilyName",
             email: 'test@example.com',
         });
 
         const response = await request(app).post('/api/users/register').send({
             username: 'TestUser',
+            full_name: "TestName TestFamilyName",
             email: 'test@example.com',
             password: 'securePassword',
         });
@@ -71,9 +73,7 @@ describe('POST /users/register', () => {
             password: 'securePassword',
         });
 
-        console.log(response.body.errors);
-        // console.log("response.status => ", response.status);
-        // console.log("response body: => ", response.body);
+        // console.log(response.body.errors);
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('status', 'error');
         expect(response.body).toHaveProperty('message', 'Validation Error');
@@ -86,5 +86,19 @@ describe('POST /users/register', () => {
                 },
             ])
         );
+    });
+
+    describe('POST /api/users/login', () => {
+        beforeAll(() => {
+            process.env.JWT_SECRET = 'testSecretKey';
+        });
+    
+        afterEach(() => {
+            jest.clearAllMocks();
+        });
+
+        it('should sucessfully login', async () => {
+
+        });
     });
 });
