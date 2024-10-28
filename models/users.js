@@ -5,7 +5,20 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        name: {
+        username: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+            unique: {
+                args: true,
+                msg: "Username is already used."
+            },
+            validate: {
+                notNull: {
+                    msg: "Username is required."
+                }
+            }
+        },
+        full_name: {
             type: DataTypes.STRING(255),
             allowNull: false,
             validate: {
