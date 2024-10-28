@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
 const db = require('./models');
 db.sequelize.sync();
@@ -13,6 +14,7 @@ const errorHandler = require('./middlewares/error-handler');
 const ApiError = require('./utils/api-error');
 
 const app = express();
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
