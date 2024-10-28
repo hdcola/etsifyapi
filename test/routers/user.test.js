@@ -165,7 +165,7 @@ describe('POST /api/users/login', () => {
         );
         SequelizeConnectionError.name = 'SequelizeConnectionError';
 
-        users.create.mockRejectedValue(SequelizeConnectionError);
+        users.findOne.mockRejectedValue(SequelizeConnectionError);
         const response = await request(app).post('/api/users/login').send({
             email: 'test@example.com',
             password: 'securePassword',
