@@ -20,6 +20,6 @@ POST {{host}}/api/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email" : "harry1@mail.com",
-    "password" : "Aa123#"   
+    "email" : "test@mail.com",
+    "password" : "testpassword"   
 }

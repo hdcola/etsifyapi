@@ -30,13 +30,13 @@ describe('POST /api/users/register', () => {
         users.create.mockResolvedValue({
             id: 1,
             username: 'TestUser',
-            full_name: "TestName TestFamilyName",
+            full_name: 'TestName TestFamilyName',
             email: 'test@example.com',
         });
 
         const response = await request(app).post('/api/users/register').send({
             username: 'TestUser',
-            full_name: "TestName TestFamilyName",
+            full_name: 'TestName TestFamilyName',
             email: 'test@example.com',
             password: 'securePassword',
         });
@@ -69,6 +69,7 @@ describe('POST /api/users/register', () => {
         users.create.mockRejectedValue(SequelizeUniqueConstraintError);
         const response = await request(app).post('/api/users/register').send({
             username: 'TestUser',
+            full_name: 'TestName TestFamilyName',
             email: 'test@example.com',
             password: 'securePassword',
         });
@@ -88,17 +89,40 @@ describe('POST /api/users/register', () => {
         );
     });
 
+    it('should return 500 Internal Server Error when database connection fails', async () => {
+        const SequelizeConnectionError = new Sequelize.ConnectionError(
+            'Database connection failed'
+        );
+        SequelizeConnectionError.name = 'SequelizeConnectionError';
+
+        users.create.mockRejectedValue(SequelizeConnectionError);
+        const response = await request(app).post('/api/users/register').send({
+            username: 'TestUser',
+            full_name: 'TestName TestFamilyName',
+            email: 'test@example.com',
+            password: 'securePassword',
+        });
+
+        console.log('response.body:', response.body);
+
+        expect(response.status).toBe(500);
+        expect(response.body).toHaveProperty('status', 'error');
+        expect(response.body).toHaveProperty(
+            'message',
+            'Internal Server Error'
+        );
+        expect(response.body).not.toHaveProperty('errors');
+    });
+
     describe('POST /api/users/login', () => {
         beforeAll(() => {
             process.env.JWT_SECRET = 'testSecretKey';
         });
-    
+
         afterEach(() => {
             jest.clearAllMocks();
         });
 
-        it('should sucessfully login', async () => {
-
-        });
+        it('should sucessfully login', async () => {});
     });
 });

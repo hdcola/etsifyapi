@@ -44,7 +44,6 @@ async function createUser({ username, full_name, email, password }) {
             email: newUser.email,
             id: newUser.id,
         });
-        // console.log('token: ', token);
         return token;
     } catch (err) {
         if (err instanceof Sequelize.ValidationError) {
@@ -77,7 +76,6 @@ async function login({ email, password }) {
             email: user.email,
             id: user.id,
         });
-        console.log('token: ', token);
         return token;
     } catch (err) {
         if (err instanceof Sequelize.ValidationError) {
