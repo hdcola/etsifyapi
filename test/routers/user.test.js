@@ -29,12 +29,12 @@ describe('POST /users/register', () => {
         users.findOne.mockResolvedValue(null);
         users.create.mockResolvedValue({
             id: 1,
-            name: 'TestUser',
+            username: 'TestUser',
             email: 'test@example.com',
         });
 
         const response = await request(app).post('/api/users/register').send({
-            name: 'TestUser',
+            username: 'TestUser',
             email: 'test@example.com',
             password: 'securePassword',
         });
@@ -66,7 +66,7 @@ describe('POST /users/register', () => {
         ];
         users.create.mockRejectedValue(SequelizeUniqueConstraintError);
         const response = await request(app).post('/api/users/register').send({
-            name: 'TestUser',
+            username: 'TestUser',
             email: 'test@example.com',
             password: 'securePassword',
         });

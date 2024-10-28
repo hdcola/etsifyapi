@@ -6,15 +6,15 @@ const { generateToken } = require('../utils/jwt');
 const yup = require('yup');
 
 const userSchema = yup.object().shape({
-    name: yup.string().required(),
+    username: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().required(),
 });
 
-async function createUser({ name, email, password }) {
+async function createUser({ username, email, password }) {
     try {
         await userSchema.validate(
-            { name, email, password },
+            { username, email, password },
             { abortEarly: false }
         );
     } catch (err) {
@@ -29,34 +29,16 @@ async function createUser({ name, email, password }) {
         }
     }
 
-    // check if email already exists
-    /* const existingName = await users.findOne({ where: { name } });
-    if (existingName) {
-        throw ApiError.badRequest('Validation Error', [{
-            field: 'name',
-            message: 'User name already exists.'
-        }]);
-    }
-
-    // check if email already exists
-    const existingEmail = await users.findOne({ where: { email } });
-    if (existingEmail) {
-        throw ApiError.badRequest('Validation Error', [{
-            field: 'email',
-            message: 'Email already exists.'
-        }]);
-    }*/
-
     const saltRounds = 10;
     const hash = await bcrypt.hash(password, saltRounds);
     try {
         const newUser = await users.create({
-            name,
+            username,
             email,
             password: hash,
         });
         const token = generateToken({
-            name: newUser.name,
+            username: newUser.username, 
             email: newUser.email,
             id: newUser.id,
         });
