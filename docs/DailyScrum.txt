@@ -71,7 +71,7 @@ Tamara
 Done since last scrum
 -Complete the data models
 To do until next scrum
-- Work on implementing the skeleton using Material Uia nd using templates.
+- Work on implementing the skeleton using Material UI and using templates.
 Need assistance with
 -
 
@@ -80,7 +80,7 @@ Done since last scrum
 - Create AWS bucket for file storage
 - Learned how to do tests, started user register method
 To do until next scrum
--
+- 
 Need assistance with
 -
 
@@ -92,8 +92,40 @@ Done since last scrum
 - Setting up public business information in stripe
 - create ApiError class and errorHandler midware
 To do until next scrum
+- init React package and default App.tsx
 - Build frontend integration with stripe
 - Build server side integration with stripe
 Need assistance with
 -
+
+10/28
+Tamara
+Done since last scrum
+-Completed the navbar with Material UI
+To do until next scrum
+- Work on implementing the skeleton using Material UI and extract some elements from existing templates.
+Need assistance with
+-
+
+Iana
+Done since last scrum
+- register server end and started client-side part
+To do until next scrum
+- login implementation
+Need assistance with
+- test for failing scenario for user registration
+
+Danny
+Done since last scrum
+- init React package and default App.tsx
+- Coderview api #8 #5, web #3 #6
+- Add vscode setting in api and web for tabSize
+- Add build task into CI-test action
+To do until next scrum
+- Build frontend integration with stripe
+- Build server side integration with stripe
+Need assistance with
+-
+
+
 
