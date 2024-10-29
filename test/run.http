@@ -2,3 +2,24 @@
 
 ### GET /test it should return 404
 GET {{host}}/test HTTP/1.1
+
+### register
+
+POST {{host}}/api/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "test",
+    "full_name": "testFull_name",
+    "email" : "test@mail.com",
+    "password" : "testpassword"   
+}
+
+### login
+POST {{host}}/api/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email" : "test@mail.com",
+    "password" : "testpassword"   
+}

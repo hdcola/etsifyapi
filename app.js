@@ -15,6 +15,7 @@ const errorHandler = require('./middlewares/error-handler');
 const ApiError = require('./utils/api-error');
 
 const app = express();
+app.use(cors());
 
 app.use(cros());
 app.use(logger('dev'));
@@ -27,8 +28,8 @@ app.use('/users', usersRouter);
 app.use('/', paymentsRouter);
 
 app.use((req, res, next) => {
-  const error = ApiError.notFound('Resource not found' + req.originalUrl);
-  next(error);
+    const error = ApiError.notFound('Resource not found' + req.originalUrl);
+    next(error);
 });
 
 app.use(errorHandler);
