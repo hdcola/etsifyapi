@@ -22,6 +22,7 @@ S3_ACCESS_KEY=amazon.s3.access-key
 S3_SECRET_KEY=amazon.s3.secret-key
 S3_ENDPOINT=amazon.s3.endpoint
 S3_BUCKET_NAME=amazon.s3.bucket-name
+STRIPE_SECRET_KEY=stripe.secret-key
 ```
 
 ### Run the development server
