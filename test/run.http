@@ -23,3 +23,15 @@ Content-Type: application/json
     "email" : "test@mail.com",
     "password" : "testpassword"   
 }
+
+### create store
+
+POST {{host}}/api/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "country_id": 1,
+    "name": "TestStore",
+    "description": "testDescription",
+    "user_id": 1
+}

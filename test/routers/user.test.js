@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt');
 
 const app = express();
 appSetup(app);
-appSetup(app);
 
 jest.mock('../../models');
 jest.mock('jsonwebtoken', () => ({

@@ -3,32 +3,9 @@ const bcrypt = require('bcrypt');
 const { Sequelize } = require('sequelize');
 const ApiError = require('../utils/api-error');
 const { generateToken } = require('../utils/jwt');
-const yup = require('yup');
-
-const userSchema = yup.object().shape({
-    username: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-});
+const jwt = require('jsonwebtoken');
 
 async function createUser({ username, full_name, email, password }) {
-    try {
-        await userSchema.validate(
-            { username, full_name, email, password },
-            { abortEarly: false }
-        );
-    } catch (err) {
-        if (err instanceof Sequelize.ValidationError) {
-            const errors = err.errors.map((e) => ({
-                message: e.message,
-                field: e.path,
-            }));
-            throw ApiError.badRequest('Validation Error', errors);
-        } else {
-            throw err;
-        }
-    }
-
     const saltRounds = 10;
     const hash = await bcrypt.hash(password, saltRounds);
     try {
@@ -90,4 +67,13 @@ async function login({ email, password }) {
     }
 }
 
-module.exports = { createUser, login };
+async function getUserFromToken(token) {
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET); 
+        return decoded;
+    } catch (err) {
+        throw ApiError.unauthorized('Invalid token');
+    }
+}
+
+module.exports = { createUser, login, getUserFromToken };
