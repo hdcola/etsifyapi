@@ -23,12 +23,12 @@ module.exports = (app) => {
     app.use('/', indexRouter);
 
     // routes configuration
-    app.use('/users', usersRouter);
-    app.use('/payments', paymentsRouter);
+    app.use('/api/users', usersRouter);
+    app.use('/api/payments', paymentsRouter);
 
     // 404 error handler
     app.use((req, res, next) => {
-        const error = ApiError.notFound('Resource not found' + req.originalUrl);
+        const error = ApiError.notFound('Resource not found ' + req.originalUrl);
         next(error);
     });
 

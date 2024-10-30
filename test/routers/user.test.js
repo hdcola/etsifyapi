@@ -1,16 +1,13 @@
 const request = require('supertest');
 const express = require('express');
-const router = require('../../routes/users');
-const ApiError = require('../../utils/api-error');
+const appSetup = require('../../appSetup');
 const { users } = require('../../models');
 const { Sequelize } = require('sequelize');
-const errorHandler = require('../../middlewares/error-handler');
 const bcrypt = require('bcrypt');
 
 const app = express();
-app.use(express.json());
-app.use('/api/users', router);
-app.use(errorHandler);
+appSetup(app);
+appSetup(app);
 
 jest.mock('../../models');
 jest.mock('jsonwebtoken', () => ({
@@ -26,7 +23,7 @@ describe('POST /api/users/register', () => {
         jest.clearAllMocks();
     });
 
-    it('should create a new user and return a success message and token', async () => {
+    it('it should create a new user and return a success message and token', async () => {
         users.findOne.mockResolvedValue(null);
         users.create.mockResolvedValue({
             id: 1,
@@ -51,7 +48,7 @@ describe('POST /api/users/register', () => {
         expect(response.body).toHaveProperty('token', 'mockedToken');
     });
 
-    it('should fail to register a new user with existing email', async () => {
+    it('it should fail to register a new user with existing email', async () => {
         const SequelizeUniqueConstraintError = new Sequelize.ValidationError();
         SequelizeUniqueConstraintError.name = 'SequelizeUniqueConstraintError';
         SequelizeUniqueConstraintError.errors = [
@@ -90,7 +87,7 @@ describe('POST /api/users/register', () => {
         );
     });
 
-    it('it fail to register and return 500 Internal Server Error when database connection fails', async () => {
+    it('it should fail to register and return 500 Internal Server Error when database connection fails', async () => {
         const SequelizeConnectionError = new Sequelize.ConnectionError(
             'Database connection failed'
         );
@@ -124,7 +121,7 @@ describe('POST /api/users/login', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
-    
+
     it('it should sucessfully login', async () => {
         const saltRounds = 10;
         users.findOne.mockResolvedValue({
@@ -155,11 +152,13 @@ describe('POST /api/users/login', () => {
 
         expect(response.status).toBe(401);
         expect(response.body).toHaveProperty('status', 'error');
-        expect(response.body).toHaveProperty('message', 'Wrong email or password');
+        expect(response.body).toHaveProperty(
+            'message',
+            'Wrong email or password'
+        );
     });
 
-    
-    it('it fail to log in and return 500 Internal Server Error when database connection fails', async () => {
+    it('it should fail to log in and return 500 Internal Server Error when database connection fails', async () => {
         const SequelizeConnectionError = new Sequelize.ConnectionError(
             'Database connection failed'
         );
@@ -181,6 +180,4 @@ describe('POST /api/users/login', () => {
         );
         expect(response.body).not.toHaveProperty('errors');
     });
-
-
 });
