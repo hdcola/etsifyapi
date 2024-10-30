@@ -26,7 +26,7 @@ describe('POST /create-payment-intent ', () => {
         const items = [{ amount: 1000 }, { amount: 500 }];
 
         const response = await request(app)
-            .post('/payments/create-payment-intent')
+            .post('/api/payments/create-payment-intent')
             .send({ items });
 
         expect(response.status).toBe(200);
