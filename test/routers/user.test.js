@@ -1,12 +1,12 @@
 const request = require('supertest');
 const express = require('express');
 const appSetup = require('../../appSetup');
-
 const { users } = require('../../models');
 const { Sequelize } = require('sequelize');
 const bcrypt = require('bcrypt');
 
 const app = express();
+appSetup(app);
 appSetup(app);
 
 jest.mock('../../models');
@@ -121,7 +121,7 @@ describe('POST /api/users/login', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
-    
+
     it('it should sucessfully login', async () => {
         const saltRounds = 10;
         users.findOne.mockResolvedValue({
@@ -152,10 +152,12 @@ describe('POST /api/users/login', () => {
 
         expect(response.status).toBe(401);
         expect(response.body).toHaveProperty('status', 'error');
-        expect(response.body).toHaveProperty('message', 'Wrong email or password');
+        expect(response.body).toHaveProperty(
+            'message',
+            'Wrong email or password'
+        );
     });
 
-    
     it('it should fail to log in and return 500 Internal Server Error when database connection fails', async () => {
         const SequelizeConnectionError = new Sequelize.ConnectionError(
             'Database connection failed'
@@ -178,6 +180,4 @@ describe('POST /api/users/login', () => {
         );
         expect(response.body).not.toHaveProperty('errors');
     });
-
-
 });
