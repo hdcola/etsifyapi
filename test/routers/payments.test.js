@@ -33,4 +33,26 @@ describe('POST /create-payment-intent ', () => {
         expect(response.body.clientSecret).toBe(clientSecret);
         expect(stripe).toHaveBeenCalledTimes(1);
     });
+
+    it('should return 400 if items are missing', async () => {
+        const response = await request(app)
+            .post('/api/payments/create-payment-intent')
+            .send({});
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe('Missing or invalid items');
+    });
+
+    it('should return 400 if items contain invalid amounts', async () => {
+        const items = [{ amount: 1000 }, { amount: null }];
+
+        const response = await request(app)
+            .post('/api/payments/create-payment-intent')
+            .send({ items });
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe(
+            'Invalid items: All items must have an amount'
+        );
+    });
 });
