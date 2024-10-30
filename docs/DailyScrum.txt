@@ -118,7 +118,7 @@ Need assistance with
 Danny
 Done since last scrum
 - init React package and default App.tsx
-- Coderview api #8 #5, web #3 #6
+- Coder review api #8 #5, web #3 #6
 - Add vscode setting in api and web for tabSize
 - Add build task into CI-test action
 To do until next scrum
@@ -127,5 +127,31 @@ To do until next scrum
 Need assistance with
 -
 
+10/29
+Tamara
+Done since last scrum
+-Working on the single item layout, in progress still.
+To do until next scrum
+- Work on implementing the skeleton using Material UI and extract some elements from existing templates.
+Need assistance with
+-
+
+Danny
+- Build frontend integration with stripe
+- Build server side integration with stripe
+- Code review web #7 #6,  api #10 #8
+To do until next scrum
+- Add unit test to Web for stripe checkout
+- Add unit test to API for create payment intent
+Need assistance with
+-
+
+Iana
+Done since last scrum
+- Register client side with TextField errors and helperTexts, started working with server mockup
+To do until next scrum
+- Register tests behaviour testing with server mockup
+Need assistance with
+-
 
 
