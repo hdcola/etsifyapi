@@ -3,6 +3,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const paymentsRouter = require('./routes/payments');
 
@@ -17,6 +18,9 @@ module.exports = (app) => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
+
+    // router elifecycle checking
+    app.use('/', indexRouter);
 
     // routes configuration
     app.use('/users', usersRouter);
