@@ -24,7 +24,7 @@ module.exports = (app) => {
 
     // 404 error handler
     app.use((req, res, next) => {
-        const error = ApiError.notFound('Resource not found' + req.originalUrl);
+        const error = ApiError.notFound('Resource not found ' + req.originalUrl);
         next(error);
     });
 
