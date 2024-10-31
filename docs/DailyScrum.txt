@@ -188,4 +188,15 @@ To do until next scrum
  Need assistance with
 - localStorage token set and get
 
+10/31
+
+Danny
+Done since last scrum
+- Make S3 interface in API 
+- Make all cloud service is well and publish last version to cloud
+To do until next scrum
+- Change 
+- Make S3 interface in  Web project
+- Use Google auth login and register a user
+Need assistance with
 
