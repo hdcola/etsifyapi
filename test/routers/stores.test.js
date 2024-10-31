@@ -42,13 +42,12 @@ describe('POST /api/stores/', () => {
             user_id: 1,
         });
 
-        const response = await request(app).post('/api/').send({
+        const response = await request(app).post('/api/stores/').send({
             country_id: 1,
             name: 'NewStore',
             description: 'newDescription',
             user_id: 1,
         });
-        console.log(response.body);
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty(
             'message',
