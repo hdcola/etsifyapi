@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const paymentsRouter = require('./routes/payments');
+const filesRouter = require('./routes/files');
 
 const errorHandler = require('./middlewares/error-handler');
 const ApiError = require('./utils/api-error');
@@ -25,6 +26,7 @@ module.exports = (app) => {
     // routes configuration
     app.use('/api/users', usersRouter);
     app.use('/api/payments', paymentsRouter);
+    app.use('/api/files', filesRouter);
 
     // 404 error handler
     app.use((req, res, next) => {
