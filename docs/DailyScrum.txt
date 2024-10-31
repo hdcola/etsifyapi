@@ -137,6 +137,7 @@ Need assistance with
 -
 
 Danny
+Done since last scrum
 - Build frontend integration with stripe
 - Build server side integration with stripe
 - Code review web #7 #6,  api #10 #8
@@ -153,5 +154,38 @@ To do until next scrum
 - Register tests behaviour testing with server mockup
 Need assistance with
 -
+
+10/30
+Tamara
+Done since last scrum
+- Completed single item and responsive layout.
+- Reviewed pull requests
+- Added countries to database
+To do until next scrum
+- Work on implementing the skeleton using Material UI and extract some elements from existing templates.
+Need assistance with
+-
+
+Danny
+Done since last scrum
+- Add unit test to Web for stripe checkout
+- Add unit test to API for create payment intent
+To do until next scrum
+- Change 
+- Make S3 interface in API and Web project
+- Make all cloud service is well and publish last version to cloud
+Need assistance with
+-
+
+Iana
+Done since last scrum
+- Started store page at client side
+- API requests for creating a new store
+- created tests for creating a store
+To do until next scrum
+- Work with get the store and its tests
+- Get countries and show them in select on create store page
+ Need assistance with
+- localStorage token set and get
 
 
