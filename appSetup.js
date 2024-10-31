@@ -3,6 +3,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const paymentsRouter = require('./routes/payments');
 const filesRouter = require('./routes/files');
@@ -19,6 +20,9 @@ module.exports = (app) => {
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
 
+    // router elifecycle checking
+    app.use('/', indexRouter);
+
     // routes configuration
     app.use('/api/users', usersRouter);
     app.use('/api/payments', paymentsRouter);
@@ -26,7 +30,7 @@ module.exports = (app) => {
 
     // 404 error handler
     app.use((req, res, next) => {
-        const error = ApiError.notFound('Resource not found' + req.originalUrl);
+        const error = ApiError.notFound('Resource not found ' + req.originalUrl);
         next(error);
     });
 
