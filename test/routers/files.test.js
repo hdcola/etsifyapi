@@ -19,9 +19,10 @@ describe('File Upload API', () => {
             .attach('file', Buffer.from('test file content'), 'testfile.txt');
 
         expect(response.status).toBe(200);
-        expect(response.body).toEqual({
-            message: 'File uploaded successfully',
-        });
+        expect(response.body.message).toEqual('File uploaded successfully');
+        expect(response.body.url).toMatch(
+            /https:\/\/.*\.s3.amazonaws.com\/\d+_testfile.txt/
+        );
     });
 
     it('should return 400 if no file is uploaded', async () => {

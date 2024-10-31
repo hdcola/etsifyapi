@@ -21,11 +21,12 @@ router.post('/upload', upload.single('file'), async (req, res, next) => {
         Body: req.file.buffer,
     };
 
-    console.log(params);
-
     try {
         await s3.upload(params).promise();
-        return res.send({ message: 'File uploaded successfully' });
+        return res.json({
+            message: 'File uploaded successfully',
+            url: `https://${process.env.S3_BUCKET_NAME}.s3.amazonaws.com/${params.Key}`,
+        });
     } catch (error) {
         return next(ApiError.internal('Failed to upload file'));
     }
