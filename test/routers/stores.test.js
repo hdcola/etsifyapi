@@ -48,6 +48,7 @@ describe('POST /api/stores/', () => {
             description: 'newDescription',
             user_id: 1,
         });
+        console.log(response.body);
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty(
             'message',

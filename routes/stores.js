@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createStore, getStores } = require('../services/store-service');
+const { createStore, getStores } = require('../services/stores-service');
 const { getUserFromToken } = require('../services/user-service');
 
 router.post('/', async (req, res, next) => {
