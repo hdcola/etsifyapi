@@ -3,7 +3,6 @@ const express = require('express');
 const appSetup = require('../../appSetup');
 const { stores } = require('../../models');
 const { Sequelize } = require('sequelize');
-const bcrypt = require('bcrypt');
 
 const app = express();
 appSetup(app);
@@ -78,4 +77,4 @@ describe('POST /api/store/', () => {
 
 });
 
-
+// TODO: get by id, get the list of stores

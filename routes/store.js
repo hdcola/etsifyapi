@@ -7,7 +7,6 @@ const { getUserFromToken } = require('../services/user-service');
 router.post('/', async (req, res, next) => {
     const { name, description, country_id } = req.body;
     // const token = localStorage.getItem('tocken');
-    // mocking from user_id = 22 in database
     /* if (!token) {
         return res.status(401).json({ success: false, message: 'No token provided' });
     } */

@@ -52,3 +52,7 @@ Content-Type: image/png
 
 < ./logo-image.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### get all countries
+
+GET {{host}}/api/countries HTTP/1.1

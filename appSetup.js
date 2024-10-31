@@ -8,6 +8,7 @@ const usersRouter = require('./routes/users');
 const paymentsRouter = require('./routes/payments');
 const filesRouter = require('./routes/files');
 const storeRouter = require('./routes/store');
+const countriesRouter = require('./routes/countries');
 
 const errorHandler = require('./middlewares/error-handler');
 const ApiError = require('./utils/api-error');
@@ -29,6 +30,7 @@ module.exports = (app) => {
     app.use('/api/payments', paymentsRouter);
     app.use('/api/files', filesRouter);
     app.use('/api/store', storeRouter);
+    app.use('/api/countries', countriesRouter);
 
     // 404 error handler
     app.use((req, res, next) => {
