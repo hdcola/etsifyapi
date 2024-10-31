@@ -189,6 +189,16 @@ To do until next scrum
 - localStorage token set and get
 
 10/31
+Tamara
+Done since last scrum
+- Complete card item
+- Add favorite click toggle
+- Started on cart layout
+To do until next scrum
+- Cart layout
+- Cart server logic
+Need assistance with
+-
 
 Danny
 Done since last scrum
@@ -199,4 +209,14 @@ To do until next scrum
 - Make S3 interface in  Web project
 - Use Google auth login and register a user
 Need assistance with
+
+Iana
+Done since last scrum
+- Request to show countries in select on create store page, started to work on store dashboard
+To do until next scrum
+- get a store by id, get all stores and their check, work on store dashboard
+Need assistance with
+- 
+
+
 
