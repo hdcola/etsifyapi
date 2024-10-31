@@ -7,7 +7,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const paymentsRouter = require('./routes/payments');
 const filesRouter = require('./routes/files');
-const storeRouter = require('./routes/store');
+const storeRouter = require('./routes/stores');
 const countriesRouter = require('./routes/countries');
 
 const errorHandler = require('./middlewares/error-handler');
@@ -29,7 +29,7 @@ module.exports = (app) => {
     app.use('/api/users', usersRouter);
     app.use('/api/payments', paymentsRouter);
     app.use('/api/files', filesRouter);
-    app.use('/api/store', storeRouter);
+    app.use('/api/stores', storeRouter);
     app.use('/api/countries', countriesRouter);
 
     // 404 error handler

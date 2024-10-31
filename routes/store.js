@@ -1,20 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const appSetup = require('../appSetup');
 const { createStore, getStores } = require('../services/store-service');
 const { getUserFromToken } = require('../services/user-service');
 
 router.post('/', async (req, res, next) => {
-    const { name, description, country_id } = req.body;
-    // const token = localStorage.getItem('tocken');
-    /* if (!token) {
-        return res.status(401).json({ success: false, message: 'No token provided' });
-    } */
-
+   const { name, description, country_id } = req.body;
+     /*const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        console.log('No token provided');
+        return res.status(401).json({ success: false, message: 'User is not logged in' });
+    }*/
     try {
         // const userData = getUserFromToken(token);
         // const user_id = userData.id; 
-        user_id=15;
+        user_id = 15;
         const store = await createStore({  
             country_id,
             name, 

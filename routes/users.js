@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const appSetup = require('../appSetup');
 const { createUser, login } = require('../services/user-service');
 
 /* Create a new user */
