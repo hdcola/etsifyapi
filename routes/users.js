@@ -7,7 +7,6 @@ router.post('/register', async function (req, res, next) {
     const { username, full_name, email, password } = req.body;
     try {
         const token = await createUser({ username, full_name, email, password });
-        // localStorage.setItem('token', data.token);
         res.status(201).json({
             success: true,
             message: 'User registered successfully',
@@ -23,7 +22,6 @@ router.post('/login', async function (req, res, next) {
     const { email, password } = req.body;
     try {
         const token = await login({email, password});
-        // localStorage.setItem('token', data.token);
         res.status(200).json({
             success: true,
             message: 'Login successful',
@@ -36,7 +34,6 @@ router.post('/login', async function (req, res, next) {
 
 /* Logout */
 router.post('/logout', function (req, res) {
-    // localStorage.removeItem('token');
     res.status(200).json({
         success: true,
         message: 'Logout successful',

@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt');
 
 const app = express();
 appSetup(app);
-appSetup(app);
 
 jest.mock('../../models');
 jest.mock('jsonwebtoken', () => ({
@@ -179,5 +178,16 @@ describe('POST /api/users/login', () => {
             'Internal Server Error'
         );
         expect(response.body).not.toHaveProperty('errors');
+    });
+});
+
+describe('POST /api/users/logout', () => {
+    it('should respond with success message on successful logout', async () => {
+        const response = await request(app)
+            .post('/api/users/logout')
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('success', true);
+        expect(response.body).toHaveProperty('message', 'Logout successful');
     });
 });
