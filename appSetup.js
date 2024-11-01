@@ -29,7 +29,7 @@ module.exports = (app) => {
     // routes configuration
     app.use('/api/users', usersRouter);
     app.use('/api/payments', validateToken, paymentsRouter);
-    app.use('/api/files', filesRouter);
+    app.use('/api/files', validateToken, filesRouter);
     app.use('/api/stores', storeRouter);
     app.use('/api/countries', countriesRouter);
 
