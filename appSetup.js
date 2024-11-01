@@ -12,6 +12,7 @@ const countriesRouter = require('./routes/countries');
 
 const errorHandler = require('./middlewares/error-handler');
 const ApiError = require('./utils/api-error');
+const { validateToken } = require('./middlewares/jwt');
 
 module.exports = (app) => {
     app.use(cors());
@@ -27,14 +28,16 @@ module.exports = (app) => {
 
     // routes configuration
     app.use('/api/users', usersRouter);
-    app.use('/api/payments', paymentsRouter);
+    app.use('/api/payments', validateToken, paymentsRouter);
     app.use('/api/files', filesRouter);
     app.use('/api/stores', storeRouter);
     app.use('/api/countries', countriesRouter);
 
     // 404 error handler
     app.use((req, res, next) => {
-        const error = ApiError.notFound('Resource not found ' + req.originalUrl);
+        const error = ApiError.notFound(
+            'Resource not found ' + req.originalUrl
+        );
         next(error);
     });
 
