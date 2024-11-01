@@ -36,8 +36,12 @@ async function getStoreForUser(user_id) {
     try {
         const store = await stores.findOne({ where: { user_id: user_id } });
         return store;
-    } catch (err) {
-        throw ApiError.badRequest('Failed to fetch stores');
+    } catch (err) {        
+        if (err instanceof Sequelize.ConnectionError) {
+            throw ApiError.internal('Database connection failed');
+        }
+
+        throw err;
     }
 }
 
@@ -45,8 +49,12 @@ async function getStoreById(store_id) {
     try {
         const store = await stores.findOne({ where: { store_id: store_id } });
         return store;
-    } catch (err) {
-        throw ApiError.badRequest('Failed to fetch stores');
+    } catch (err) {        
+        if (err instanceof Sequelize.ConnectionError) {
+            throw ApiError.internal('Database connection failed');
+        }
+
+        throw err;
     }
 }
 

@@ -65,6 +65,7 @@ router.get('/:store_id', async (req, res, next) => {
             store,
         });
     } catch (err) {
+        console.error(err);
         next(err);
     }
 });
