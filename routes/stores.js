@@ -20,7 +20,6 @@ router.post('/', validateToken, async (req, res, next) => {
             store,
         });
     } catch (err) {
-        console.error(err);
         next(err);
     }
 });
