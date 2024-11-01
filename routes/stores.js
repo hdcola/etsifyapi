@@ -1,19 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { createStore, getStoreForUser, getStoreById } = require('../services/stores-service');
-const { getUserFromToken } = require('../services/user-service');
+const { validateToken} = require('../middlewares/jwt');
 
-router.post('/', async (req, res, next) => {
-    const { name, description, country_id } = req.body;
-    /*const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-        console.log('No token provided');
-        return res.status(401).json({ success: false, message: 'User is not logged in' });
-    }*/
-    try {
-        // const userData = getUserFromToken(token);
-        // const user_id = userData.id;
-        user_id = 15;
+router.post('/', validateToken, async (req, res, next) => {
+    const { name, description, country_id } = req.body;   
+    const user_id = req.userId;
+    console.log("user_id:", user_id);
+    try { 
         const store = await createStore({
             country_id,
             name,
@@ -26,21 +20,19 @@ router.post('/', async (req, res, next) => {
             store,
         });
     } catch (err) {
+        console.error(err);
         next(err);
     }
 });
 
-router.get('/', async (req, res, next) => {
-    // const token = localStorage.getItem('tocken');
+/* get store of the logged user */
+router.get('/', validateToken, async (req, res, next) => { 
+    const userId = req.userId;
     try {
-        //  const userData = getUserFromToken(token);
-        // mocking from user_id = 22 in database
-        // const user_id = userData.id;
-        user_id = 15;
-        const stores = await getStoreForUser(user_id);
+        const store = await getStoreForUser(userId);
         res.status(200).json({
             success: true,
-            stores,
+            store,
         });
     } catch (err) {
         next(err);

@@ -19,7 +19,7 @@ async function createUser({ username, full_name, email, password }) {
             username: newUser.username,
             full_name: newUser.full_name,
             email: newUser.email,
-            id: newUser.id,
+            id: newUser.user_id,
         });
         return token;
     } catch (err) {
@@ -51,7 +51,7 @@ async function login({ email, password }) {
             username: user.username,
             full_name: user.full_name,
             email: user.email,
-            id: user.id,
+            id: user.user_id,
         });
         return token;
     } catch (err) {

@@ -11,14 +11,13 @@ function generateToken(payload) {
 const validateToken = (req, res, next) => {
     const secretKey = process.env.JWT_SECRET || 'testSecretKey';
     const token = req.headers.authorization?.replace('Bearer ', '');
-
     if (!token) {
         return res.status(403).json({ error: 'Unauthorized' });
     }
 
     try {
         const payload = verify(token, secretKey);
-        req.userId = payload.userId;
+        req.userId = payload.id;
         req.token = token;
         next();
     } catch (error) {

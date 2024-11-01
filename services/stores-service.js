@@ -32,9 +32,9 @@ async function createStore({ country_id, name, description, user_id }) {
     }
 }
 
-async function getStoreForUser(user_id) {
+async function getStoreForUser(userId) {
     try {
-        const store = await stores.findOne({ where: { user_id: user_id } });
+        const store = await stores.findOne({ where: { user_id: userId } });
         return store;
     } catch (err) {        
         if (err instanceof Sequelize.ConnectionError) {

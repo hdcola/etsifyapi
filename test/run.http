@@ -37,9 +37,11 @@ Content-Type: application/json
     "user_id": 22
 }
 
-### get all stores
+### get store for logged user
 GET {{host}}/api/stores HTTP/1.1
-
+Content-Type: application/json
+Authorization: Bearer {{token}}
+# need to use actual token of the user existing in database, otherwise "Internal Server Error"
 
 ### get store by id
 GET {{host}}/api/stores/35 HTTP/1.1

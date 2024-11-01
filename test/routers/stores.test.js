@@ -3,12 +3,18 @@ const express = require('express');
 const appSetup = require('../../appSetup');
 const { stores } = require('../../models');
 const { Sequelize } = require('sequelize');
+const { generateToken } = require('../../middlewares/jwt');
 
 const app = express();
 appSetup(app);
 jest.mock('../../models');
 
 describe('POST /api/stores/', () => {
+    let token;
+    let userId = 1;
+    beforeEach(() => {
+        token = generateToken({ userId: userId });
+    });
     afterEach(() => {
         jest.clearAllMocks();
     });
@@ -23,12 +29,15 @@ describe('POST /api/stores/', () => {
             user_id: 1,
         });
 
-        const response = await request(app).post('/api/stores/').send({
-            country_id: 1,
-            name: 'TestStore',
-            description: 'testDescription',
-            user_id: 1,
-        });
+        const response = await request(app)
+            .post('/api/stores/')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                country_id: 1,
+                name: 'TestStore',
+                description: 'testDescription',
+                user_id: 1,
+            });
         expect(response.status).toBe(201);
         expect(response.body).toHaveProperty('success', true);
     });
@@ -42,7 +51,10 @@ describe('POST /api/stores/', () => {
             user_id: 1,
         });
 
-        const response = await request(app).post('/api/stores/').send({
+        const response = await request(app)
+        .post('/api/stores/')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
             country_id: 1,
             name: 'NewStore',
             description: 'newDescription',
@@ -61,7 +73,10 @@ describe('POST /api/stores/', () => {
             new Sequelize.ConnectionError('Database connection failed')
         );
 
-        const response = await request(app).post('/api/stores/').send({
+        const response = await request(app)
+        .post('/api/stores/')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
             country_id: 1,
             name: 'TestStore',
             description: 'testDescription',
@@ -122,11 +137,48 @@ describe('GET /api/stores/:store_id', () => {
         stores.findOne.mockRejectedValue(SequelizeConnectionError);
         const response = await request(app).get('/api/stores/1');
         expect(response.status).toBe(500);
-        expect(response.body).toHaveProperty('status', 'error'); 
-        expect(response.body).toHaveProperty('message', 'Database connection failed');
+        expect(response.body).toHaveProperty('status', 'error');
+        expect(response.body).toHaveProperty(
+            'message',
+            'Database connection failed'
+        );
         expect(response.body).not.toHaveProperty('errors');
     });
 });
+
+describe('GET /api/stores/', () => {
+    let token;
+    let userId = 1;
+
+    beforeEach(() => {
+        token = generateToken({ userId: userId });
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('should return 200 and the store for the logged-in user', async () => {
+        const mockStore = {
+            store_id: 1,
+            name: 'Test Store',
+            description: 'A description of the test store',
+            country_id: 101,
+            user_id: userId,
+        };
+
+        stores.findOne.mockResolvedValue(mockStore);
+
+        const response = await request(app)
+            .get('/api/stores/')
+            .set('Authorization', `Bearer ${token}`);
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('success', true);
+        expect(response.body.store).toEqual(mockStore);
+    });
+});
+
 
 // TODO: get the list of stores
 // TODO: add if user doesn't exist in database
