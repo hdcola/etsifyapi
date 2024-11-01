@@ -2,7 +2,7 @@ const { users } = require('../models');
 const bcrypt = require('bcrypt');
 const { Sequelize } = require('sequelize');
 const ApiError = require('../utils/api-error');
-const { generateToken } = require('../utils/jwt');
+const { generateToken } = require('../middlewares/jwt');
 const jwt = require('jsonwebtoken');
 
 async function createUser({ username, full_name, email, password }) {
@@ -16,8 +16,8 @@ async function createUser({ username, full_name, email, password }) {
             password: hash,
         });
         const token = generateToken({
-            username: newUser.username, 
-            full_name: newUser.full_name, 
+            username: newUser.username,
+            full_name: newUser.full_name,
             email: newUser.email,
             id: newUser.id,
         });
@@ -36,9 +36,9 @@ async function createUser({ username, full_name, email, password }) {
 }
 
 async function login({ email, password }) {
-    try{
+    try {
         const user = await users.findOne({ where: { email: email } });
-        if (!user) {            
+        if (!user) {
             throw ApiError.unauthorized('Wrong email or password');
         }
 
@@ -48,8 +48,8 @@ async function login({ email, password }) {
         }
 
         const token = generateToken({
-            username: user.username, 
-            full_name: user.full_name, 
+            username: user.username,
+            full_name: user.full_name,
             email: user.email,
             id: user.id,
         });
@@ -69,7 +69,7 @@ async function login({ email, password }) {
 
 async function getUserFromToken(token) {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET); 
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         return decoded;
     } catch (err) {
         throw ApiError.unauthorized('Invalid token');
