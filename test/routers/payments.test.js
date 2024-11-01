@@ -16,6 +16,8 @@ jest.mock('stripe', () => {
 });
 
 const stripe = require('stripe');
+const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJmdWxsX25hbWUiOiJ0ZXN0RnVsbF9uYW1lIiwiZW1haWwiOiJ0ZXN0QG1haWwuY29tIiwiaWF0IjoxNzMwNDcyNDQ1LCJleHAiOjE3MzkxMTI0NDV9.mg-9z1Sd0XMOwRLfUDYcSgaviwq4Eq5iZCCsJhRNvoU';
 
 describe('POST /create-payment-intent ', () => {
     afterEach(() => {
@@ -27,6 +29,7 @@ describe('POST /create-payment-intent ', () => {
 
         const response = await request(app)
             .post('/api/payments/create-payment-intent')
+            .set('Authorization', `Bearer ${token}`)
             .send({ items });
 
         expect(response.status).toBe(200);
@@ -37,6 +40,7 @@ describe('POST /create-payment-intent ', () => {
     it('should return 400 if items are missing', async () => {
         const response = await request(app)
             .post('/api/payments/create-payment-intent')
+            .set('Authorization', `Bearer ${token}`)
             .send({});
 
         expect(response.status).toBe(400);
@@ -48,6 +52,7 @@ describe('POST /create-payment-intent ', () => {
 
         const response = await request(app)
             .post('/api/payments/create-payment-intent')
+            .set('Authorization', `Bearer ${token}`)
             .send({ items });
 
         expect(response.status).toBe(400);
