@@ -8,6 +8,9 @@ const s3 = require('../../config/s3config');
 const app = express();
 appSetup(app);
 
+const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJmdWxsX25hbWUiOiJ0ZXN0RnVsbF9uYW1lIiwiZW1haWwiOiJ0ZXN0QG1haWwuY29tIiwiaWF0IjoxNzMwNDcyNDQ1LCJleHAiOjE3MzkxMTI0NDV9.mg-9z1Sd0XMOwRLfUDYcSgaviwq4Eq5iZCCsJhRNvoU';
+
 describe('File Upload API', () => {
     it('should upload a file successfully', async () => {
         s3.upload.mockReturnValue({
@@ -16,6 +19,7 @@ describe('File Upload API', () => {
 
         const response = await request(app)
             .post('/api/files/upload')
+            .set('Authorization', `Bearer ${token}`)
             .attach('file', Buffer.from('test file content'), 'testfile.txt');
 
         expect(response.status).toBe(200);
@@ -26,7 +30,9 @@ describe('File Upload API', () => {
     });
 
     it('should return 400 if no file is uploaded', async () => {
-        const response = await request(app).post('/api/files/upload');
+        const response = await request(app)
+            .post('/api/files/upload')
+            .set('Authorization', `Bearer ${token}`);
 
         expect(response.status).toBe(400);
         expect(response.body).toEqual({
@@ -42,6 +48,7 @@ describe('File Upload API', () => {
 
         const response = await request(app)
             .post('/api/files/upload')
+            .set('Authorization', `Bearer ${token}`)
             .attach('file', Buffer.from('test file content'), 'testfile.txt');
 
         expect(response.status).toBe(500);
@@ -54,6 +61,7 @@ describe('File Upload API', () => {
     it('should return 400 if file size exceeds 10MB', async () => {
         const response = await request(app)
             .post('/api/files/upload')
+            .set('Authorization', `Bearer ${token}`)
             .attach('file', Buffer.alloc(1024 * 1024 * 11), 'testfile.txt');
 
         expect(response.status).toBe(400);
