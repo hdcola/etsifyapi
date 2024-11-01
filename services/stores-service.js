@@ -32,7 +32,7 @@ async function createStore({ country_id, name, description, user_id }) {
     }
 }
 
-async function getStores(user_id) {
+async function getStoreForUser(user_id) {
     try {
         const store = await stores.findOne({ where: { user_id: user_id } });
         return store;
@@ -41,4 +41,13 @@ async function getStores(user_id) {
     }
 }
 
-module.exports = { createStore, getStores };
+async function getStoreById(store_id) {
+    try {
+        const store = await stores.findOne({ where: { store_id: store_id } });
+        return store;
+    } catch (err) {
+        throw ApiError.badRequest('Failed to fetch stores');
+    }
+}
+
+module.exports = { createStore, getStoreForUser, getStoreById };

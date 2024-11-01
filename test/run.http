@@ -26,15 +26,22 @@ Content-Type: application/json
 
 ### create store
 
-POST {{host}}/api/users/login HTTP/1.1
+POST {{host}}/api/stores HTTP/1.1
 Content-Type: application/json
 
 {
-    "country_id": 1,
-    "name": "TestStore",
-    "description": "testDescription",
-    "user_id": 1
+    "country_id": 5,
+    "name": "TestStore1",
+    "description": "testDescription1",
+    "user_id": 22
 }
+
+### get all stores
+GET {{host}}/api/stores HTTP/1.1
+
+
+### get store by id
+GET {{host}}/api/stores/35 HTTP/1.1
 
 ### GET payment intent
 POST {{host}}/api/payments/create-payment-intent HTTP/1.1
