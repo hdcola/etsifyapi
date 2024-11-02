@@ -33,13 +33,14 @@ router.post('/register', async function (req, res, next) {
 });
 
 const register = async (user_info, res, next) => {
-    const { username, full_name, email, password } = user_info;
+    const { username, full_name, email, password, picture } = user_info;
     try {
         const token = await createUser({
             username,
             full_name,
             email,
             password,
+            picture,
         });
         res.status(201).json({
             success: true,
@@ -84,7 +85,12 @@ router.post('/google-login', async function (req, res, next) {
         const user = await findUserByEmail(email);
         if (!user) {
             // Create a new user
-            await register({ username, full_name, email, picture }, res, next);
+            const password = Math.random().toString(36).substring(7);
+            await register(
+                { username, full_name, email, picture, password },
+                res,
+                next
+            );
         } else {
             const token = generateToken({
                 username: user.username,

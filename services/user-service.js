@@ -5,7 +5,7 @@ const ApiError = require('../utils/api-error');
 const { generateToken } = require('../middlewares/jwt');
 const jwt = require('jsonwebtoken');
 
-async function createUser({ username, full_name, email, password }) {
+async function createUser({ username, full_name, email, password, picture }) {
     const saltRounds = 10;
     const hash = await bcrypt.hash(password, saltRounds);
     try {
@@ -14,6 +14,7 @@ async function createUser({ username, full_name, email, password }) {
             full_name,
             email,
             password: hash,
+            picture,
         });
         const token = generateToken({
             username: newUser.username,
