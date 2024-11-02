@@ -18,6 +18,7 @@ const validateToken = (req, res, next) => {
 
     try {
         const payload = verify(token, secretKey);
+        console.log(payload);
         req.userId = payload.userId;
         req.token = token;
         next();
