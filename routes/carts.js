@@ -59,7 +59,6 @@ router.delete('/:itemId([0-9]+)', async (req, res, next) => {
 // Get item (distinct) count from cart
 router.get('/count', async (req, res, next) => {
     try {
-        console.log(req.userId);
         const cart = await getCount(req.userId);
         res.status(200).json(cart);
     } catch (err) {
