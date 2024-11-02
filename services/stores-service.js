@@ -32,13 +32,30 @@ async function createStore({ country_id, name, description, user_id }) {
     }
 }
 
-async function getStores(user_id) {
+async function getStoreForUser(userId) {
     try {
-        const store = await stores.findOne({ where: { user_id: user_id } });
+        const store = await stores.findOne({ where: { user_id: userId } });
         return store;
-    } catch (err) {
-        throw ApiError.badRequest('Failed to fetch stores');
+    } catch (err) {        
+        if (err instanceof Sequelize.ConnectionError) {
+            throw ApiError.internal('Database connection failed');
+        }
+
+        throw err;
     }
 }
 
-module.exports = { createStore, getStores };
+async function getStoreById(store_id) {
+    try {
+        const store = await stores.findOne({ where: { store_id: store_id } });
+        return store;
+    } catch (err) {        
+        if (err instanceof Sequelize.ConnectionError) {
+            throw ApiError.internal('Database connection failed');
+        }
+
+        throw err;
+    }
+}
+
+module.exports = { createStore, getStoreForUser, getStoreById };

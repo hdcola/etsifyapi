@@ -14,10 +14,6 @@ jest.mock('jsonwebtoken', () => ({
 }));
 
 describe('POST /api/users/register', () => {
-    beforeAll(() => {
-        process.env.JWT_SECRET = 'testSecretKey';
-    });
-
     afterEach(() => {
         jest.clearAllMocks();
     });
@@ -113,10 +109,6 @@ describe('POST /api/users/register', () => {
 });
 
 describe('POST /api/users/login', () => {
-    beforeAll(() => {
-        process.env.JWT_SECRET = 'testSecretKey';
-    });
-
     afterEach(() => {
         jest.clearAllMocks();
     });
