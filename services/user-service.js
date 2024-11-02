@@ -20,6 +20,7 @@ async function createUser({ username, full_name, email, password }) {
             full_name: newUser.full_name,
             email: newUser.email,
             id: newUser.id,
+            picture: newUser.picture,
         });
         return token;
     } catch (err) {
@@ -52,6 +53,7 @@ async function login({ email, password }) {
             full_name: user.full_name,
             email: user.email,
             id: user.id,
+            picture: user.picture,
         });
         return token;
     } catch (err) {
@@ -67,6 +69,10 @@ async function login({ email, password }) {
     }
 }
 
+const findUserByEmail = async (email) => {
+    return await users.findOne({ where: { email } });
+};
+
 async function getUserFromToken(token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -76,4 +82,4 @@ async function getUserFromToken(token) {
     }
 }
 
-module.exports = { createUser, login, getUserFromToken };
+module.exports = { createUser, login, getUserFromToken, findUserByEmail };

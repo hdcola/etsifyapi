@@ -24,6 +24,7 @@ S3_REGIN=amazon.s3.region
 S3_ENDPOINT=amazon.s3.endpoint
 S3_BUCKET_NAME=amazon.s3.bucket-name
 STRIPE_SECRET_KEY=stripe.secret-key
+GOOGLE_CLIENT_ID=google.client-id
 ```
 
 ### Run the development server
