@@ -1,6 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const appSetup = require('../../appSetup');
+const { generateToken } = require('../../middlewares/jwt');
 
 const app = express();
 appSetup(app);
@@ -16,10 +17,15 @@ jest.mock('stripe', () => {
 });
 
 const stripe = require('stripe');
-const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJmdWxsX25hbWUiOiJ0ZXN0RnVsbF9uYW1lIiwiZW1haWwiOiJ0ZXN0QG1haWwuY29tIiwiaWF0IjoxNzMwNDcyNDQ1LCJleHAiOjE3MzkxMTI0NDV9.mg-9z1Sd0XMOwRLfUDYcSgaviwq4Eq5iZCCsJhRNvoU';
 
 describe('POST /create-payment-intent ', () => {
+    let token;
+    let userId = 1;
+
+    beforeEach(() => {
+        token = generateToken({ userId: userId });
+    });
+
     afterEach(() => {
         jest.clearAllMocks();
     });
