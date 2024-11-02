@@ -19,7 +19,7 @@ async function createUser({ username, full_name, email, password }) {
             username: newUser.username,
             full_name: newUser.full_name,
             email: newUser.email,
-            id: newUser.id,
+            userId: newUser.user_id,
             picture: newUser.picture,
         });
         return token;
@@ -52,7 +52,7 @@ async function login({ email, password }) {
             username: user.username,
             full_name: user.full_name,
             email: user.email,
-            id: user.id,
+            userId: user.user_id,
             picture: user.picture,
         });
         return token;
