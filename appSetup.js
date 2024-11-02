@@ -9,6 +9,7 @@ const paymentsRouter = require('./routes/payments');
 const filesRouter = require('./routes/files');
 const storeRouter = require('./routes/stores');
 const countriesRouter = require('./routes/countries');
+const cartsRouter = require('./routes/carts');
 
 const errorHandler = require('./middlewares/error-handler');
 const ApiError = require('./utils/api-error');
@@ -32,6 +33,7 @@ module.exports = (app) => {
     app.use('/api/files', validateToken, filesRouter);
     app.use('/api/stores', storeRouter);
     app.use('/api/countries', countriesRouter);
+    app.use('/api/carts', validateToken, cartsRouter);
 
     // 404 error handler
     app.use((req, res, next) => {
