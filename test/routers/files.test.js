@@ -1,6 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const appSetup = require('../../appSetup');
+const { generateToken } = require('../../middlewares/jwt');
 
 jest.mock('../../config/s3config');
 const s3 = require('../../config/s3config');
@@ -8,10 +9,14 @@ const s3 = require('../../config/s3config');
 const app = express();
 appSetup(app);
 
-const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJmdWxsX25hbWUiOiJ0ZXN0RnVsbF9uYW1lIiwiZW1haWwiOiJ0ZXN0QG1haWwuY29tIiwiaWF0IjoxNzMwNDcyNDQ1LCJleHAiOjE3MzkxMTI0NDV9.mg-9z1Sd0XMOwRLfUDYcSgaviwq4Eq5iZCCsJhRNvoU';
-
 describe('File Upload API', () => {
+    let token;
+    let userId = 1;
+
+    beforeEach(() => {
+        token = generateToken({ userId: userId });
+    });
+
     it('should upload a file successfully', async () => {
         s3.upload.mockReturnValue({
             promise: jest.fn().mockResolvedValue({}),
