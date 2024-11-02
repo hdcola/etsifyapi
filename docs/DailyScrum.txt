@@ -209,6 +209,7 @@ To do until next scrum
 - Make S3 interface in  Web project
 - Use Google auth login and register a user
 Need assistance with
+-
 
 Iana
 Done since last scrum
@@ -218,5 +219,35 @@ To do until next scrum
 Need assistance with
 - 
 
+11/01
+Tamara
+Done since last scrum
+- Working on cart server logic
+To do until next scrum
+- Finish Cart layout
+- Finish Cart server logic
+Need assistance with
+-
 
+Danny
+Done since last scrum
+- Make S3 interface in  Web project
+- reconstruct login in Web
+To do until next scrum
+- Change 
+- reconstruct login in API
+- reconstruct register in Web
+- reconstruct register in API
+- add jwt validation for payments
+- Use Google auth login and register a user
+Need assistance with
+-
+
+Iana
+Done since last scrum
+- Fixed store_id issue and added tests for finding the store by id 
+To do until next scrum
+- Dashboard main page 
+ Need assistance with
+-
 
