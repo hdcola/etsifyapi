@@ -12,9 +12,10 @@ jest.mock('../../models/');
 
 describe('GET /api/carts', () => {
     let token;
-    let userId = 1;
+    let userId;
 
     beforeEach(() => {
+        userId = 1;
         token = generateToken({ userId: userId });
     });
 
@@ -196,9 +197,10 @@ describe('GET /api/carts', () => {
 
 describe('POST /api/carts', () => {
     let token;
-    let userId = 1;
+    let userId;
 
     beforeEach(() => {
+        userId = 1;
         token = generateToken({ userId: userId });
     });
 
@@ -414,9 +416,10 @@ describe('POST /api/carts', () => {
 
 describe('PATCH /api/carts', () => {
     let token;
-    let userId = 1;
+    let userId;
 
     beforeEach(() => {
+        userId = 1;
         token = generateToken({ userId: userId });
     });
 
@@ -601,9 +604,10 @@ describe('PATCH /api/carts', () => {
 
 describe('DELETE /api/carts', () => {
     let token;
-    let userId = 1;
+    let userId;
 
     beforeEach(() => {
+        userId = 1;
         token = generateToken({ userId: userId });
     });
 
