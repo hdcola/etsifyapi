@@ -11,7 +11,7 @@ async function createUser({ username, fullName, email, password, picture }) {
     try {
         const newUser = await users.create({
             username,
-            full_name: fullName,
+            fullName,
             email,
             password: hash,
             picture,
