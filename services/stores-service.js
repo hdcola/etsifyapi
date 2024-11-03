@@ -58,4 +58,6 @@ async function getStoreById(store_id) {
     }
 }
 
+// TODO: put edit Store info
+
 module.exports = { createStore, getStoreForUser, getStoreById };

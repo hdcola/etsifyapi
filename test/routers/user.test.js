@@ -33,7 +33,6 @@ describe('POST /api/users/register', () => {
             email: 'test@example.com',
             password: 'securePassword',
         });
-        // console.log(response.body);
         expect(response.status).toBe(201);
         expect(response.body).toHaveProperty('success', true);
         expect(response.body).toHaveProperty(
@@ -67,7 +66,6 @@ describe('POST /api/users/register', () => {
             password: 'securePassword',
         });
 
-        // console.log(response.body.errors);
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('status', 'error');
         expect(response.body).toHaveProperty('message', 'Validation Error');
@@ -160,8 +158,6 @@ describe('POST /api/users/login', () => {
             email: 'test@example.com',
             password: 'securePassword',
         });
-
-        console.log('response.body:', response.body);
 
         expect(response.status).toBe(500);
         expect(response.body).toHaveProperty('status', 'error');

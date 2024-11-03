@@ -6,7 +6,6 @@ const { validateToken} = require('../middlewares/jwt');
 router.post('/', validateToken, async (req, res, next) => {
     const { name, description, country_id } = req.body;   
     const user_id = req.userId;
-    console.log("user_id:", user_id);
     try { 
         const store = await createStore({
             country_id,
@@ -60,5 +59,7 @@ router.get('/:store_id', async (req, res, next) => {
         next(err);
     }
 });
+
+// TODO: edit a store
 
 module.exports = router;

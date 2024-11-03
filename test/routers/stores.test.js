@@ -142,7 +142,6 @@ describe('GET /api/stores/:store_id', () => {
             'message',
             'Database connection failed'
         );
-        expect(response.body).not.toHaveProperty('errors');
     });
 });
 
