@@ -1,70 +1,36 @@
 const { items } = require('../models');
-const { Sequelize } = require('sequelize');
-const ApiError = require('../utils/api-error');
+const { sequelizeTryCatch } = require('../utils/sequelize-helper');
 
-// get items for the store of the logged vendor
-async function getItemsForStore(storeId) {
-    try {
-        const itemsFound = await items.findAll({
-            where: { store_id: storeId },
+async function getItem(itemId) {
+    return sequelizeTryCatch(async () => {
+        // Get the item
+        const item = await items.findByPk(itemId, {
+            attributes: { exclude: ['store_id', 'date_created'] },
+            include: [
+                {
+                    association: 'store',
+                    attributes: {
+                        exclude: [
+                            'description',
+                            'date_created',
+                            'last_updated',
+                            'image_url',
+                            'country_id',
+                        ],
+                    },
+                    include: [{ association: 'country' }],
+                },
+                {
+                    association: 'reviews',
+                },
+            ],
         });
-        return itemsFound;
-    } catch (err) {
-        if (err instanceof Sequelize.ConnectionError) {
-            throw ApiError.internal('Database connection failed');
+        if (!item) {
+            throw new Error(`Item ${itemId} doesn't exist.`);
         }
 
-        throw err;
-    }
+        return item;
+    });
 }
 
-async function createItem({ name, description, store_id }) {
-    try {
-        const newItem = await items.create({
-            name,
-            description,
-            store_id,
-        });
-        return newItem;
-    } catch (err) {
-        if (err instanceof Sequelize.ValidationError) {
-            const errors = err.errors.map((e) => ({
-                message: e.message,
-                field: e.path,
-            }));
-            throw ApiError.badRequest('Validation Error', errors);
-        }
-        if (err instanceof Sequelize.ConnectionError) {
-            throw ApiError.internal('Database connection failed');
-        }
-
-        throw err;
-    }
-}
-
-async function checkExistingItemName({ name, store_id }) {
-    try {
-        const existingItem = await items.findOne({
-            where: {
-                name: name,
-                store_id: store_id,
-            },
-        });
-        return existingItem;
-    } catch (err) {
-        if (err instanceof Sequelize.ValidationError) {
-            const errors = err.errors.map((e) => ({
-                message: e.message,
-                field: e.path,
-            }));
-            throw ApiError.badRequest('Validation Error', errors);
-        }
-        if (err instanceof Sequelize.ConnectionError) {
-            throw ApiError.internal('Database connection failed');
-        }
-
-        throw err;
-    }
-}
-
-module.exports = { getItemsForStore, createItem, checkExistingItemName };
+module.exports = { getItem };
