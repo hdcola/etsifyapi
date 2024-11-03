@@ -2,17 +2,17 @@ const { stores } = require('../models');
 const { Sequelize } = require('sequelize');
 const ApiError = require('../utils/api-error');
 
-async function createStore({ countryId, name, description, userId }) {
+async function createStore({ country_id, name, description, user_id }) {
     try {
-        const existingStore = await stores.findOne({ where: { userId } });
+        const existingStore = await stores.findOne({ where: { user_id } });
         if (existingStore) {
             throw ApiError.badRequest('User already has a store');
         }
         const newStore = await stores.create({
-            countryId,
+            country_id,
             name,
             description,
-            userId,
+            user_id,
         });
         return newStore;
     } catch (err) {
@@ -45,9 +45,9 @@ async function getStoreForUser(userId) {
     }
 }
 
-async function getStoreById(storeId) {
+async function getStoreById(store_id) {
     try {
-        const store = await stores.findOne({ where: { store_id: storeId } });
+        const store = await stores.findOne({ where: { store_id: store_id } });
         return store;
     } catch (err) {        
         if (err instanceof Sequelize.ConnectionError) {
@@ -57,7 +57,5 @@ async function getStoreById(storeId) {
         throw err;
     }
 }
-
-// TODO: put edit Store info
 
 module.exports = { createStore, getStoreForUser, getStoreById };

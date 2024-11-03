@@ -4,14 +4,15 @@ const { createStore, getStoreForUser, getStoreById } = require('../services/stor
 const { validateToken} = require('../middlewares/jwt');
 
 router.post('/', validateToken, async (req, res, next) => {
-    const { name, description, countryId } = req.body;   
-    const userId = req.userId;
+    const { name, description, country_id } = req.body;   
+    const user_id = req.userId;
+    console.log("user_id:", user_id);
     try { 
         const store = await createStore({
-            countryId,
+            country_id,
             name,
             description,
-            userId,
+            user_id,
         });
         res.status(201).json({
             success: true,
@@ -38,10 +39,10 @@ router.get('/', validateToken, async (req, res, next) => {
 });
 
 
-router.get('/:storeId', async (req, res, next) => {
+router.get('/:store_id', async (req, res, next) => {
     try {
-        const { storeId } = req.params;
-        const store = await getStoreById(storeId);
+        const { store_id } = req.params;
+        const store = await getStoreById(store_id);
 
         if (!store) {
             return res.status(404).json({
@@ -59,7 +60,5 @@ router.get('/:storeId', async (req, res, next) => {
         next(err);
     }
 });
-
-// TODO: edit a store
 
 module.exports = router;
