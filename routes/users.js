@@ -4,10 +4,13 @@ const {
     createUser,
     login,
     findUserByEmail,
+    getUserById,
+    changeUserSettings,
 } = require('../services/user-service');
 const ApiError = require('../utils/api-error');
 const { generateToken } = require('../middlewares/jwt');
 const { OAuth2Client } = require('google-auth-library');
+const { validateToken } = require('../middlewares/jwt');
 
 const client_id = process.env.GOOGLE_CLIENT_ID;
 const client = new OAuth2Client(client_id);
@@ -67,6 +70,52 @@ router.post('/login', async function (req, res, next) {
     }
 });
 
+router.get('/:id([0-9]+)', async (req, res, next) => {
+    const { id } = req.params;
+
+    const user = await getUserById(id);
+
+    if (!user) {
+        const err = ApiError.notFound('User not found');
+        return next(err);
+    }
+
+    return res.status(200).json({
+        userId: user.user_id,
+        username: user.username,
+        full_name: user.full_name,
+        email: user.email,
+        picture: user.picture,
+    });
+});
+
+router.put('/:id([0-9]+)', validateToken, async (req, res, next) => {
+    const id = parseInt(req.params.id, 10);
+    const user_id = parseInt(req.userId, 10);
+
+    if (id !== user_id) {
+        const err = ApiError.forbidden('Forbidden');
+        return next(err);
+    }
+    try {
+        const { full_name, username, password, picture } = req.body;
+        const token = await changeUserSettings({
+            userId: id,
+            full_name,
+            username,
+            password,
+            picture,
+        });
+        res.status(200).json({
+            success: true,
+            message: 'User settings updated successfully',
+            token,
+        });
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.post('/google-login', async function (req, res, next) {
     const { token } = req.body;
 
@@ -98,6 +147,7 @@ router.post('/google-login', async function (req, res, next) {
                 email: user.email,
                 id: user.id,
                 picture: picture,
+                userId: user.user_id,
             });
             res.status(200).json({
                 success: true,
