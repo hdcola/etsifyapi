@@ -44,7 +44,7 @@ async function getItems(userId) {
         }
 
         // Get all cart items
-        return await cart.getItems({
+        const items = await cart.getItems({
             attributes: { exclude: ['store_id'] },
             joinTableAttributes: ['quantity', 'discount_percent'],
             include: [
@@ -68,7 +68,32 @@ async function getItems(userId) {
                 },
             ],
         });
+        const checkout = calculateCheckout(items);
+
+        return { items: items, checkout: checkout };
     });
+}
+
+function calculateCheckout(items) {
+    let itemsTotal = 0;
+    let shopDiscount = 0;
+
+    items.forEach((item) => {
+        itemsTotal += item.price * item.carts_items.quantity;
+        shopDiscount += itemsTotal * (item.carts_items.discount_percent / 100);
+    });
+
+    let subtotal = itemsTotal - shopDiscount;
+    let shipping = 9.99;
+    let total = subtotal + shipping;
+
+    return {
+        itemsTotal,
+        shopDiscount,
+        subtotal,
+        shipping,
+        total,
+    };
 }
 
 async function updateQuantity(userId, itemId, quantity) {
@@ -144,4 +169,11 @@ async function getCount(userId) {
     });
 }
 
-module.exports = { getItems, addItem, deleteItem, updateQuantity, getCount };
+module.exports = {
+    getItems,
+    addItem,
+    deleteItem,
+    updateQuantity,
+    getCount,
+    calculateCheckout,
+};
