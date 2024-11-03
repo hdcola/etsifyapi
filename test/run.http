@@ -25,6 +25,10 @@ Content-Type: application/json
     "password" : "testpassword"   
 }
 
+### get user by id
+GET {{host}}/api/users/48 HTTP/1.1
+
+
 ### create store
 
 POST {{host}}/api/stores HTTP/1.1
