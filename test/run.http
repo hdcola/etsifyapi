@@ -29,12 +29,12 @@ Content-Type: application/json
 
 POST {{host}}/api/stores HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "country_id": 5,
     "name": "TestStore1",
-    "description": "testDescription1",
-    "user_id": 22
+    "description": "testDescription1"
 }
 
 ### get store for logged user
