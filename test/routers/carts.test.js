@@ -3,6 +3,7 @@ const express = require('express');
 const appSetup = require('../../appSetup');
 const ApiError = require('../../utils/api-error');
 const { users, items } = require('../../models');
+const { calculateCheckout } = require('../../services/carts-service');
 const { generateToken } = require('../../middlewares/jwt');
 
 const app = express();
@@ -187,10 +188,13 @@ describe('GET /api/carts', () => {
             };
         });
 
+        const items = users.findByPk().getCart().getItems();
+        const checkout = calculateCheckout(items);
+
         const response = await getItemsReq();
 
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(users.findByPk().getCart().getItems());
+        expect(response.body).toEqual({ items: items, checkout: checkout });
     });
 });
 
