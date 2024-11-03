@@ -26,6 +26,7 @@ router.get('/', validateToken, async (req, res, next) => {
             items,
         });
     } catch (err) {
+        console.error('get items for the store of the logged vendor', err);
         next(err);
     }
 });
@@ -66,6 +67,7 @@ router.post('/add', validateToken, async (req, res, next) => {
             item,
         });
     } catch (err) {
+        console.error('create item:', err);
         next(err);
     }
 });
