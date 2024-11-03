@@ -8,10 +8,10 @@ router.post('/', validateToken, async (req, res, next) => {
     const userId = req.userId;
     try { 
         const store = await createStore({
-            country_id: countryId,
+            countryId,
             name,
             description,
-            user_id: userId,
+            userId,
         });
         res.status(201).json({
             success: true,
