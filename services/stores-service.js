@@ -4,7 +4,7 @@ const ApiError = require('../utils/api-error');
 
 async function createStore({ country_id, name, description, user_id }) {
     try {
-        const existingStore = await stores.findOne({ where: { user_id } });
+        const existingStore = await stores.findOne({ where: { user_id: user_id } });
         if (existingStore) {
             throw ApiError.badRequest('User already has a store');
         }
