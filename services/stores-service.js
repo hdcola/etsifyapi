@@ -57,5 +57,30 @@ async function getStoreById(store_id) {
         throw err;
     }
 }
+async function updateStore(store, { name, description, logo_url }) {
+    try {
+        store.name = name || store.name;
+        store.description = description || store.description;
+        store.logo_url = logo_url || null;
 
-module.exports = { createStore, getStoreForUser, getStoreById };
+        await store.save();
+        return store;
+    } catch (err) {
+        console.log('updateStore error:', err);
+        if (err instanceof Sequelize.ValidationError) {
+            const errors = err.errors.map((e) => ({
+                message: e.message,
+                field: e.path,
+            }));
+            throw ApiError.badRequest('Validation Error', errors);
+        }
+        if (err instanceof Sequelize.ConnectionError) {
+            throw ApiError.internal('Database connection failed');
+        }
+
+        throw err;
+    }
+}
+
+
+module.exports = { createStore, getStoreForUser, getStoreById, updateStore };

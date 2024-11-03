@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { createStore, getStoreForUser, getStoreById } = require('../services/stores-service');
+const { createStore, getStoreForUser, getStoreById, updateStore } = require('../services/stores-service');
 const { validateToken} = require('../middlewares/jwt');
 
 router.post('/', validateToken, async (req, res, next) => {
     const { name, description, country_id } = req.body;   
     const user_id = req.userId;
-    console.log("user_id:", user_id);
     try { 
         const store = await createStore({
             country_id,
@@ -60,5 +59,33 @@ router.get('/:store_id', async (req, res, next) => {
         next(err);
     }
 });
+
+router.put('/', validateToken, async (req, res, next) => {
+    const { name, description, logo_url } = req.body;
+    const user_id = req.userId;
+
+    try {
+        
+        const store = await getStoreForUser(user_id);
+        if (!store) {
+            return res.status(404).json({
+                success: false,
+                message: 'Store not found or unauthorized',
+            });
+        }
+
+        const updatedStore = await updateStore(store, { name, description, logo_url });
+
+        res.status(200).json({
+            success: true,
+            message: 'Store updated successfully',
+            store: updatedStore,
+        });
+    } catch (err) {
+        console.error('Error in PUT /api/stores:', err); 
+        next(err);
+    }
+});
+
 
 module.exports = router;
