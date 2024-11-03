@@ -179,6 +179,80 @@ describe('GET /api/stores/', () => {
     });
 });
 
+describe('PUT /api/stores', () => {
+    let token;
+    let userId = 1;
+
+    beforeEach(() => {
+        token = generateToken({ userId: userId });
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('should update the store details for the logged-in user', async () => {
+        const updatedStoreData = {
+            name: 'Updated Test Store',
+            description: 'Updated description',
+        };
+
+        stores.findOne.mockResolvedValue({
+            ...updatedStoreData,
+            save: jest.fn().mockResolvedValue(updatedStoreData),
+        });
+
+        const response = await request(app)
+            .put('/api/stores')
+            .set('Authorization', `Bearer ${token}`)
+            .send(updatedStoreData);
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('success', true);
+        expect(response.body.store).toMatchObject(updatedStoreData);
+    });
+
+    it('should return 404 if the store for the logged-in user does not exist', async () => {
+        stores.findOne.mockResolvedValue(null);
+
+        const response = await request(app)
+            .put('/api/stores')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                name: 'New Store Name',
+                description: 'New Description',
+            });
+
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty(
+            'message',
+            'Store not found or unauthorized'
+        );
+    });
+
+    it('should return 500 Internal Server Error when database connection fails', async () => {
+        const SequelizeConnectionError = new Sequelize.ConnectionError(
+            'Database connection failed'
+        );
+        stores.findOne.mockRejectedValue(SequelizeConnectionError);
+
+        const response = await request(app)
+            .put('/api/stores')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                name: 'Test Store',
+                description: 'Test Description',
+            });
+
+        expect(response.status).toBe(500);
+        expect(response.body).toHaveProperty('status', 'error');
+        expect(response.body).toHaveProperty(
+            'message',
+            'Database connection failed'
+        );
+    });
+});
+
 
 // TODO: get the list of stores
 // TODO: add if user doesn't exist in database
