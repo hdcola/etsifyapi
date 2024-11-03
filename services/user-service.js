@@ -18,7 +18,7 @@ async function createUser({ username, fullName, email, password, picture }) {
         });
         const token = generateToken({
             username: newUser.username,
-            full_name: newUser.full_name,
+            full_name: newUser.fullName,
             email: newUser.email,
             userId: newUser.user_id,
             picture: newUser.picture,
