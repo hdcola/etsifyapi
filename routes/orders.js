@@ -23,13 +23,12 @@ router.get('/', async (req, res, next) => {
              orders,
          });
     } catch (err) {
-        console.log(err);
         next(err);
     }
 });
 
-router.put('/:id/status', async (req, res, next) => {
-    const orderId = req.params.id;
+router.put('/:orderId/status', async (req, res, next) => {
+    const orderId = req.params.orderId;
     const { status } = req.body;
 
     try {
@@ -46,7 +45,6 @@ router.put('/:id/status', async (req, res, next) => {
             });
         }
     } catch (err) {
-        console.log(err);
         next(err);
     }
 });

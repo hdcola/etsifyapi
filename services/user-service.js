@@ -5,20 +5,20 @@ const ApiError = require('../utils/api-error');
 const { generateToken } = require('../middlewares/jwt');
 const jwt = require('jsonwebtoken');
 
-async function createUser({ username, full_name, email, password, picture }) {
+async function createUser({ username, fullName, email, password, picture }) {
     const saltRounds = 10;
     const hash = await bcrypt.hash(password, saltRounds);
     try {
         const newUser = await users.create({
             username,
-            full_name,
+            fullName,
             email,
             password: hash,
             picture,
         });
         const token = generateToken({
             username: newUser.username,
-            full_name: newUser.full_name,
+            full_name: newUser.fullName,
             email: newUser.email,
             userId: newUser.user_id,
             picture: newUser.picture,
