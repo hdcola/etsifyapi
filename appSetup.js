@@ -11,6 +11,7 @@ const storeRouter = require('./routes/stores');
 const countriesRouter = require('./routes/countries');
 const cartsRouter = require('./routes/carts');
 const ordersRouter = require('./routes/orders');
+const itemsRouter = require('./routes/items');
 
 const errorHandler = require('./middlewares/error-handler');
 const ApiError = require('./utils/api-error');
@@ -36,6 +37,7 @@ module.exports = (app) => {
     app.use('/api/countries', countriesRouter);
     app.use('/api/carts', validateToken, cartsRouter);
     app.use('/api/orders', validateToken, ordersRouter);
+    app.use('/api/items', itemsRouter);
 
     // 404 error handler
     app.use((req, res, next) => {

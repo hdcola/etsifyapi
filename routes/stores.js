@@ -74,6 +74,7 @@ router.put('/', validateToken, async (req, res, next) => {
             });
         }
 
+        // TODO: check if the store name already exists
         const updatedStore = await updateStore(store, { name, description, logo_url });
 
         res.status(200).json({
