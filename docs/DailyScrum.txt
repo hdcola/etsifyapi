@@ -251,3 +251,35 @@ To do until next scrum
  Need assistance with
 -
 
+11/03
+Iana 
+Done since last scrum
+- Added orders management page, items management
+To do until next scrum
+- To add functionality to edit item and delete
+Need assistance with
+-
+
+Tamara
+Done since last scrum
+- Finish with the cart and started on items
+To do until next scrum
+- Finish browsing 
+- Adding to cart from page item. 
+- Finish fixing smaller details. 
+- Try to implement the search
+Need assistance with
+-
+
+Danny
+Done since last scrum
+-  Added moveCartItemsToOrder when payment finish 
+- User settings editing functionality
+- upgrade Payment and Complete page
+To do until next scrum
+-
+Need assistance with
+-
+
+
+
