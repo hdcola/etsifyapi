@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const appSetup = require('../../appSetup');
-const { stores } = require('../../models');
+const { stores, items } = require('../../models');
 const { Sequelize } = require('sequelize');
 const { generateToken } = require('../../middlewares/jwt');
 
@@ -52,14 +52,14 @@ describe('POST /api/stores/', () => {
         });
 
         const response = await request(app)
-        .post('/api/stores/')
-        .set('Authorization', `Bearer ${token}`)
-        .send({
-            country_id: 1,
-            name: 'NewStore',
-            description: 'newDescription',
-            user_id: 1,
-        });
+            .post('/api/stores/')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                country_id: 1,
+                name: 'NewStore',
+                description: 'newDescription',
+                user_id: 1,
+            });
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty(
             'message',
@@ -74,14 +74,14 @@ describe('POST /api/stores/', () => {
         );
 
         const response = await request(app)
-        .post('/api/stores/')
-        .set('Authorization', `Bearer ${token}`)
-        .send({
-            country_id: 1,
-            name: 'TestStore',
-            description: 'testDescription',
-            user_id: 1,
-        });
+            .post('/api/stores/')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                country_id: 1,
+                name: 'TestStore',
+                description: 'testDescription',
+                user_id: 1,
+            });
 
         console.log(response);
         expect(response.status).toBe(500);
@@ -253,7 +253,5 @@ describe('PUT /api/stores', () => {
     });
 });
 
-
-// TODO: get the list of stores
 // TODO: add if user doesn't exist in database
 // TODO: add if country id doesn't exist in database
