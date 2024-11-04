@@ -99,9 +99,9 @@ router.get('/items', validateToken, async (req, res, next) => {
     }
 });
 
-// create item
+// create item for the store
 router.post('/items', validateToken, async (req, res, next) => {
-    const { name, description } = req.body;
+    const { name, description, image_url, quantity, price } = req.body;
     const userId = req.userId;
     try {
         const storeFound = await getStoreForUser(userId);
@@ -113,6 +113,7 @@ router.post('/items', validateToken, async (req, res, next) => {
         }
         const store_id = storeFound.store_id;
         /*
+        // gives errors
         // check if an item with the same name already exists in the store
         const existingItem = await checkExistingItemName(name, store_id);
 
@@ -128,6 +129,9 @@ router.post('/items', validateToken, async (req, res, next) => {
             name,
             description,
             store_id,
+            image_url,
+            quantity,
+            price,
         });
         res.status(201).json({
             success: true,
@@ -161,5 +165,7 @@ router.get('/:store_id', async (req, res, next) => {
         next(err);
     }
 });
+
+
 
 module.exports = router;

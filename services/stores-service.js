@@ -100,15 +100,19 @@ async function getItemsForStore(storeId) {
     }
 }
 
-async function createItem({ name, description, store_id }) {
+async function createItem({ name, description, store_id, image_url, quantity, price }) {
     try {
         const newItem = await items.create({
             name,
             description,
             store_id,
+            image_url,
+            quantity,
+            price
         });
         return newItem;
     } catch (err) {
+        console.log('createItem error: ', err);
         if (err instanceof Sequelize.ValidationError) {
             const errors = err.errors.map((e) => ({
                 message: e.message,
