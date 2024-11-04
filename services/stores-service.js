@@ -84,7 +84,7 @@ async function updateStore(store, { name, description, logo_url }) {
     }
 }
 
-// get items for the store of the logged vendor
+// get items for the store with storeId
 async function getItemsForStore(storeId) {
     try {
         const itemsFound = await items.findAll({

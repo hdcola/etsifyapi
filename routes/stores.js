@@ -80,7 +80,6 @@ router.put('/', validateToken, async (req, res, next) => {
 // get items for the store of the logged vendor
 router.get('/items', validateToken, async (req, res, next) => {
     const userId = req.userId;
-    console.log('hello??');
     try {
         const storeFound = await getStoreForUser(userId);
         if (!storeFound) {
@@ -97,6 +96,23 @@ router.get('/items', validateToken, async (req, res, next) => {
         });
     } catch (err) {
         console.error('get items for the store of the logged vendor', err);
+        next(err);
+    }
+});
+
+
+// get items for the store with id
+router.get('/:storeId/items', async (req, res, next) => {
+    const storeId = req.params.storeId;
+    try {
+        const items = await getItemsForStore(storeId);
+        console.log(items);
+        res.status(200).json({
+            success: true,
+            items,
+        });
+    } catch (err) {
+        console.error('get items for the store with id', err);
         next(err);
     }
 });
