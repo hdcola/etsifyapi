@@ -33,7 +33,6 @@ describe('POST /api/users/register', () => {
             email: 'test@example.com',
             password: 'securePassword',
         });
-        // console.log(response.body);
         expect(response.status).toBe(201);
         expect(response.body).toHaveProperty('success', true);
         expect(response.body).toHaveProperty(

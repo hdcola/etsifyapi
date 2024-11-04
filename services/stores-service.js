@@ -100,15 +100,26 @@ async function getItemsForStore(storeId) {
     }
 }
 
-async function createItem({ name, description, store_id }) {
+async function createItem({
+    name,
+    description,
+    store_id,
+    image_url,
+    quantity,
+    price,
+}) {
     try {
         const newItem = await items.create({
             name,
             description,
             store_id,
+            image_url,
+            quantity,
+            price,
         });
         return newItem;
     } catch (err) {
+        console.log('createItem error: ', err);
         if (err instanceof Sequelize.ValidationError) {
             const errors = err.errors.map((e) => ({
                 message: e.message,
@@ -149,6 +160,59 @@ async function checkExistingItemName({ name, store_id }) {
     }
 }
 
+async function deleteItemForStore(itemId, storeId) {
+    try {
+        const item = await items.findOne({
+            where: { item_id: itemId, store_id: storeId },
+        });
+        if (!item) {
+            throw ApiError.notFound('Item not found in this store');
+        }
+        await item.destroy();
+    } catch (err) {
+        if (err instanceof Sequelize.ConnectionError) {
+            throw ApiError.internal('Database connection failed');
+        }
+        throw err;
+    }
+}
+
+async function editItemForStore(
+    itemId,
+    storeId,
+    { name, description, image_url, quantity, price }
+) {
+    try {
+        const item = await items.findOne({
+            where: { item_id: itemId, store_id: storeId },
+        });
+        if (!item) {
+            throw ApiError.notFound('Item not found in this store');
+        }
+
+        item.name = name || item.name;
+        item.description = description || item.description;
+        item.image_url = image_url || item.image_url;
+        item.quantity = quantity !== undefined ? quantity : item.quantity; 
+        item.price = price !== undefined ? price : item.price;
+
+        await item.save();
+        return item;
+    } catch (err) {
+        if (err instanceof Sequelize.ValidationError) {
+            const errors = err.errors.map((e) => ({
+                message: e.message,
+                field: e.path,
+            }));
+            throw ApiError.badRequest('Validation Error', errors);
+        }
+        if (err instanceof Sequelize.ConnectionError) {
+            throw ApiError.internal('Database connection failed');
+        }
+        throw err;
+    }
+}
+
 module.exports = {
     createStore,
     getStoreForUser,
@@ -157,4 +221,6 @@ module.exports = {
     getItemsForStore,
     createItem,
     checkExistingItemName,
+    deleteItemForStore,
+    editItemForStore,
 };

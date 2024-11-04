@@ -5,6 +5,7 @@ const { stores, items } = require('../../models');
 const { Sequelize } = require('sequelize');
 const { generateToken } = require('../../middlewares/jwt');
 
+
 const app = express();
 appSetup(app);
 jest.mock('../../models');
@@ -252,6 +253,8 @@ describe('PUT /api/stores', () => {
         );
     });
 });
+
+
 
 // TODO: add if user doesn't exist in database
 // TODO: add if country id doesn't exist in database
