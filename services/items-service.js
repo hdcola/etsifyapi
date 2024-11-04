@@ -33,4 +33,28 @@ async function getItem(itemId) {
     });
 }
 
-module.exports = { getItem };
+async function getItems() {
+    return sequelizeTryCatch(async () => {
+        return await items.findAll({
+            attributes: { exclude: ['store_id', 'date_created'] },
+            include: [
+                {
+                    association: 'store',
+                    attributes: {
+                        exclude: [
+                            'description',
+                            'date_created',
+                            'last_updated',
+                            'image_url',
+                            'country_id',
+                            'user_id',
+                        ],
+                    },
+                },
+            ],
+            order: [['last_updated', 'DESC']],
+        });
+    });
+}
+
+module.exports = { getItem, getItems };
