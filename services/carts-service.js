@@ -83,6 +83,7 @@ function calculateCheckout(items) {
         shopDiscount += itemsTotal * (item.carts_items.discount_percent / 100);
     });
 
+    itemsTotal = itemsTotal.toFixed(2);
     let subtotal = itemsTotal - shopDiscount;
     let shipping = 9.99;
     let total = (subtotal + shipping).toFixed(2);
