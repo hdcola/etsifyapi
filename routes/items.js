@@ -13,7 +13,8 @@ router.get('/:itemId([0-9]+)', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const items = await getItems();
+        const queryTerm = req.query.query;
+        const items = await getItems(queryTerm || '');
         res.status(200).json(items);
     } catch (err) {
         next(err);

@@ -1,5 +1,7 @@
 const { items } = require('../models');
 const { sequelizeTryCatch } = require('../utils/sequelize-helper');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 async function getItem(itemId) {
     return sequelizeTryCatch(async () => {
@@ -33,9 +35,18 @@ async function getItem(itemId) {
     });
 }
 
-async function getItems() {
+async function getItems(queryTerm) {
     return sequelizeTryCatch(async () => {
         return await items.findAll({
+            where: {
+                [Op.or]: [
+                    {
+                        name: {
+                            [Op.like]: '%' + queryTerm + '%',
+                        },
+                    },
+                ],
+            },
             attributes: { exclude: ['store_id', 'date_created'] },
             include: [
                 {
