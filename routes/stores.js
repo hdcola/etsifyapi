@@ -7,7 +7,9 @@ const {
     updateStore,
     createItem,
     getItemsForStore,
-    checkExistingItemName,
+    //checkExistingItemName,
+    deleteItemForStore,
+    editItemForStore,
 } = require('../services/stores-service');
 const { validateToken } = require('../middlewares/jwt');
 
@@ -166,6 +168,64 @@ router.get('/:store_id', async (req, res, next) => {
     }
 });
 
+// delete item for the store
+router.delete('/items/:itemId', validateToken, async (req, res, next) => {
+    const { itemId } = req.params;
+    const userId = req.userId;
 
+    try {
+        const storeFound = await getStoreForUser(userId);
+        if (!storeFound) {
+            return res.status(404).json({
+                success: false,
+                message: 'Store not found or unauthorized',
+            });
+        }
+
+        await deleteItemForStore(itemId, storeFound.store_id);
+
+        res.status(204).json({
+            success: true,
+            message: 'Item deleted successfully',
+        });
+    } catch (err) {
+        console.error('Error in DELETE /api/stores/items/:item_id:', err);
+        next(err);
+    }
+});
+
+// edit item for the store
+router.put('/items/:itemId', validateToken, async (req, res, next) => {
+    const { itemId } = req.params;
+    const { name, description, image_url, quantity, price } = req.body;
+    const userId = req.userId;
+
+    try {
+        const storeFound = await getStoreForUser(userId);
+        if (!storeFound) {
+            return res.status(404).json({
+                success: false,
+                message: 'Store not found or unauthorized',
+            });
+        }
+
+        const updatedItem = await editItemForStore(itemId, storeFound.store_id, {
+            name,
+            description,
+            image_url,
+            quantity,
+            price
+        });
+
+        res.status(200).json({
+            success: true,
+            message: 'Item updated successfully',
+            item: updatedItem,
+        });
+    } catch (err) {
+        console.error('Error in  edit item for the store:', err);
+        next(err);
+    }
+});
 
 module.exports = router;
