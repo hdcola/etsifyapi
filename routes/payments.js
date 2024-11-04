@@ -54,7 +54,7 @@ router.post('/checkout', async (req, res, next) => {
         const order = await moveCartItemsToOrder(
             req.userId,
             req.body.paymentId,
-            (isMovingToOrder = false)
+            (isMovingToOrder = true)
         );
         res.status(200).json(order);
     } catch (err) {
