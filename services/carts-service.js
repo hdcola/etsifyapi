@@ -85,7 +85,7 @@ function calculateCheckout(items) {
 
     let subtotal = itemsTotal - shopDiscount;
     let shipping = 9.99;
-    let total = subtotal + shipping;
+    let total = (subtotal + shipping).toFixed(2);
 
     return {
         itemsTotal,

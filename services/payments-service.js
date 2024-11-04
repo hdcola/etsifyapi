@@ -33,11 +33,13 @@ async function moveCartItemsToOrder(userId, paymentId, isMovingToOrder = true) {
                     payment_method: 'Stripe',
                     full_name: user.full_name,
                     status: 'Pending',
-                    total: cartItems.reduce(
-                        (sum, item) =>
-                            sum + item.price * item.carts_items.quantity,
-                        0
-                    ),
+                    total: cartItems
+                        .reduce(
+                            (sum, item) =>
+                                sum + item.price * item.carts_items.quantity,
+                            0
+                        )
+                        .toFixed(2), // Ensure the total is rounded to two decimal places
                 },
                 { transaction }
             );
