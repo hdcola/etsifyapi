@@ -1,7 +1,7 @@
 const express = require('express');
 const ApiError = require('../utils/api-error');
 const router = express.Router();
-
+const { moveCartItemsToOrder } = require('../services/payments-service');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || 'test_key');
 
 const calculateOrderAmount = (items) => {
@@ -14,6 +14,7 @@ const calculateOrderAmount = (items) => {
     return total;
 };
 
+// Create payment intent
 router.post('/create-payment-intent', async (req, res, next) => {
     const { items } = req.body;
 
@@ -43,6 +44,21 @@ router.post('/create-payment-intent', async (req, res, next) => {
     } catch (error) {
         // Handle errors from Stripe
         return next(ApiError.internal('Failed to create payment intent'));
+    }
+});
+
+// Move cart items to order
+router.post('/checkout', async (req, res, next) => {
+    try {
+        console.log(req.userId);
+        const order = await moveCartItemsToOrder(
+            req.userId,
+            req.body.paymentId,
+            (isMovingToOrder = true)
+        );
+        res.status(200).json(order);
+    } catch (err) {
+        next(err);
     }
 });
 
