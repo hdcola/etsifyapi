@@ -50,7 +50,6 @@ router.post('/create-payment-intent', async (req, res, next) => {
 // Move cart items to order
 router.post('/checkout', async (req, res, next) => {
     try {
-        console.log(req.userId);
         const order = await moveCartItemsToOrder(
             req.userId,
             req.body.paymentId,
