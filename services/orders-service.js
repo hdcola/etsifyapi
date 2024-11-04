@@ -7,7 +7,7 @@ async function getOrdersForStore(storeId) {
     try {
         const responce = await orders.findAll({ where: { store_id: storeId } });
         return responce;
-    } catch (err) {        
+    } catch (err) {
         if (err instanceof Sequelize.ConnectionError) {
             throw ApiError.internal('Database connection failed');
         }
@@ -15,7 +15,6 @@ async function getOrdersForStore(storeId) {
         throw err;
     }
 }
-
 
 async function updateOrderStatus(orderId, status) {
     try {
@@ -25,8 +24,8 @@ async function updateOrderStatus(orderId, status) {
         }
         await orders.update({ status }, { where: { order_id: orderId } });
 
-        const updatedOrder = { ...order, status }; 
-        return updatedOrder; 
+        const updatedOrder = { ...order, status };
+        return updatedOrder;
     } catch (err) {
         throw ApiError.internal('Error updating order status');
     }

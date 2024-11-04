@@ -1,5 +1,5 @@
 @host=http://localhost:3000
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJmdWxsX25hbWUiOiJ0ZXN0RnVsbF9uYW1lIiwiZW1haWwiOiJ0ZXN0QG1haWwuY29tIiwiaWF0IjoxNzMwNDcyNDQ1LCJleHAiOjE3MzkxMTI0NDV9.mg-9z1Sd0XMOwRLfUDYcSgaviwq4Eq5iZCCsJhRNvoU
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhkIiwiZnVsbF9uYW1lIjoiRGFubnkiLCJlbWFpbCI6Imh1YW5nZG9uZ0BnbWFpbC5jb20iLCJ1c2VySWQiOjQ4LCJwaWN0dXJlIjpudWxsLCJpYXQiOjE3MzA2OTQwMTgsImV4cCI6MTczMTU1ODAxOH0.DyhGF5ne-plHAZV6-IO2g0CvsCG8uEjXoEW9BWdMe94
 
 ### GET /test it should return 404
 GET {{host}}/ HTTP/1.1
@@ -71,3 +71,11 @@ Content-Type: image/png
 ### get all countries
 
 GET {{host}}/api/countries HTTP/1.1
+
+
+### checkout
+POST {{host}}/api/payments/checkout HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{"paymentId": "pi_1J5J9vKXr6fXj5Z2J9J9J9J9"}
